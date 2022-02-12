@@ -1,0 +1,11 @@
+/* make http and body fill up all area  */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+/* make the canvas fill its container */
+canvas {
+  width: 1000px;
+  height: 1000px;
+  display: block;
+}

@@ -27,8 +27,8 @@ async function main() {
 
   var positions = [
     0, 0,
-    0, 1000,
-    500, 0,
+    0, 100,
+    1000, 0,
   ];
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 

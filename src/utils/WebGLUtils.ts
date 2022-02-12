@@ -100,8 +100,11 @@ export class WebGLUtils {
   static resizeCanvasToDisplaySize(canvas) {
     // Lookup the size the browser is displaying the canvas in CSS pixels.
     const dpr = window.devicePixelRatio;
-    const displayWidth  = Math.round(canvas.clientWidth * dpr);
-    const displayHeight = Math.round(canvas.clientHeight * dpr);
+    // const displayWidth  = Math.round(canvas.clientWidth * dpr);
+    // const displayHeight = Math.round(canvas.clientHeight * dpr);
+
+    const displayWidth  = canvas.clientWidth;
+    const displayHeight = canvas.clientHeight;
   
       // Check if the canvas is not the same size.
       const needResize = (canvas.width != displayWidth || canvas.height != displayHeight);
