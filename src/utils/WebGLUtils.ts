@@ -1,4 +1,4 @@
-export class WebGLUtils {
+class WebGLUtils {
   /**
    * Fetches the shader source from /shaders folder.
    * 
@@ -119,3 +119,5 @@ export class WebGLUtils {
   }
 
 }
+
+export default WebGLUtils;
