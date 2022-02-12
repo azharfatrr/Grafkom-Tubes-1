@@ -7,43 +7,71 @@ class WebGLObjects {
     return this.id;
   }
 
-  // The array of vertices.
-  protected _position: number[];
-  public get position(): number[] {
-    return this._position;
-  }
-  public set position(value: number[]) {
-    this._position = value;
-  }
+  // The array of vertices position.
+  public position: number[];
 
   // The color of object.
-  protected _color: number[];
-  public get color(): number[] {
-    return this._color;
-  }
-  public set color(value: number[]) {
-    this._color = value;
-  }
+  public color: number[];
 
   // The vertex buffer.
-  protected _positionBuffer: WebGLBuffer;
+  protected positionBuffer: WebGLBuffer;
+  // The location of the vertex buffer.
+  protected positionAttributeLocation: number;
 
   // The color buffer.
-  protected _colorBuffer: WebGLBuffer;
+  protected colorBuffer: WebGLBuffer;
+  // The location of the color buffer.
+  protected colorAttributeLocation: number;
 
   // The WebGL context.
-  public gl: WebGLRenderingContext;
+  protected gl: WebGLRenderingContext;
+  // The WebGL shader program.
+  protected program: WebGLProgram;
 
   // CLASS METHODS
 
-  constructor(id: number, gl: WebGLRenderingContext) {
+  /**
+   * Construct the object.
+   * 
+   * @param id - The id of object.
+   * @param gl - The WebGL context.
+   * @param program - The shader program.
+   */
+  constructor(id: number, gl: WebGLRenderingContext, program: WebGLProgram) {
     // Set the id and the gl context.
     this._id = id;
     this.gl = gl;
+    this.program = program;
 
     // Create the buffers.
-    this._positionBuffer = this.gl.createBuffer();
-    this._colorBuffer = this.gl.createBuffer();
+    this.positionBuffer = this.gl.createBuffer();
+    this.colorBuffer = this.gl.createBuffer();
+
+    // Set the attributes.
+    this.setAttributes();
+  }
+
+  /**
+   * Set the shader's attributes location.
+   * 
+   * @param program - The shader program.
+   * @param positionAttributeName - The name of the position attribute. Default: 'a_position'.
+   * @param colorAttributeName - The name of the color attribute. Default: 'a_color'.
+   */
+  setAttributes(
+    program?: WebGLProgram, 
+    positionAttributeName: string = 'a_position', 
+    colorAttributeName: string = 'a_color'): void {
+    // Check if a new shader program is given.
+    if (program) {
+      this.program = program;
+    }
+
+    // Set the position attribute location.
+    this.positionAttributeLocation = this.gl.getAttribLocation(program, positionAttributeName);
+
+    // Set the color attribute location.
+    this.colorAttributeLocation = this.gl.getAttribLocation(program, colorAttributeName);
   }
 
   /**
@@ -52,28 +80,28 @@ class WebGLObjects {
   bind() {
     const gl = this.gl;
     // Start binding the position buffers.
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._positionBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
     // Set the position.
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this._position), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.position), gl.STATIC_DRAW);
 
     // Start binding the color buffers.
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._colorBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
     // Set the colors.
-    gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(this._color), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(this.color), gl.STATIC_DRAW);
   }
   
   /**
    * Draws the object.
    */
-  draw(positionAttributeLocation: number, colorAttributeLocation: number) {
+  draw() {
     const gl = this.gl
     
     // Start drawing vertex.
     // Turn on the attribute.
-    gl.enableVertexAttribArray(positionAttributeLocation);
+    gl.enableVertexAttribArray(this.positionAttributeLocation);
 
     // Bind the position buffer.
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._positionBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
 
     // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
     var size = 2;          // 2 components per iteration
@@ -82,14 +110,14 @@ class WebGLObjects {
     var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
     var offset = 0;        // start at the beginning of the buffer
     gl.vertexAttribPointer(
-        positionAttributeLocation, size, type, normalize, stride, offset);
+        this.positionAttributeLocation, size, type, normalize, stride, offset);
 
     // Start coloring object.
     // Turn on the color attribute
-    gl.enableVertexAttribArray(colorAttributeLocation);
+    gl.enableVertexAttribArray(this.colorAttributeLocation);
   
     // Bind the color buffer.
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._colorBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
   
     // Tell the color attribute how to get data out of colorBuffer (ARRAY_BUFFER)
     var size = 4;          // 4 components per iteration
@@ -98,7 +126,7 @@ class WebGLObjects {
     var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
     var offset = 0;        // start at the beginning of the buffer
     gl.vertexAttribPointer(
-      colorAttributeLocation, size, type, normalize, stride, offset);
+      this.colorAttributeLocation, size, type, normalize, stride, offset);
         
     // Draw the geometry.
     var primitiveType = gl.TRIANGLES;
