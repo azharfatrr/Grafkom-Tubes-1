@@ -1,0 +1,15 @@
+{
+  "name": "Grafkom-Tubes-1",
+  "version": "1.0.0",
+  "main": "src/main.ts",
+  "repository": "https://github.com/azharfatrr/Grafkom-Tubes-1.git",
+  "author": "Kelompok 5",
+  "license": "MIT",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  }
+}

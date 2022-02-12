@@ -1,0 +1,118 @@
+export class WebGLUtils {
+  /**
+   * Fetches the shader source from /shaders folder.
+   * 
+   * @param source The source name.
+   */
+  static async fetchShader(source: String) {
+    // Fetch the shader.
+    const rawShader = await fetch(`/shaders/${source}`);
+
+    // Convert the shader to a string.
+    const shader = await rawShader.text();
+
+    // Return the shader.
+    return shader;
+  }
+
+
+  /**
+   * Creates and compiles a shader.
+   *
+   * @param gl The WebGL Context.
+   * @param shaderSource The GLSL source code for the shader.
+   * @param shaderType The type of shader, VERTEX_SHADER or FRAGMENT_SHADER.
+   * @return The shader.
+   */
+  static async compileShader(
+    gl: WebGLRenderingContext, 
+    shaderSource: string, 
+    shaderType: number)
+    : Promise<WebGLShader> {
+    // Fetch the shader.
+    const fetchedShader = await this.fetchShader(shaderSource);
+    
+    // Create the shader object
+    var shader = gl.createShader(shaderType);
+    
+    // Set the shader source code.
+    gl.shaderSource(shader, fetchedShader);
+    
+    // Compile the shader
+    gl.compileShader(shader);
+    
+    // Check if it compiled
+    var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+    if (!success) {
+      // Something went wrong during compilation; get the error
+      throw "Could not compile shader:" + gl.getShaderInfoLog(shader);
+    }
+    
+    return shader;
+  }
+  
+  
+  /**
+   * Creates a program from 2 shaders source.
+   *
+   * @param gl The WebGL context.
+   * @param vertexShaderSource A vertex shader source.
+   * @param fragShaderSource A fragment shader source.
+   * @return A program.
+   */
+  static async createProgram(
+    gl: WebGLRenderingContext, 
+    vertexShaderSource: string, 
+    fragShaderSource: string)
+    : Promise<WebGLProgram> {
+    // Create the shaders.
+    const vertexShader = await this.compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER)
+    const fragmentShader = await this.compileShader(gl, fragShaderSource, gl.FRAGMENT_SHADER)
+
+    // create a program.
+    var program = gl.createProgram();
+    
+    // attach the shaders.
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    
+    // link the program.
+    gl.linkProgram(program);
+    
+    // Check if it linked.
+    var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+    if (!success) {
+        // something went wrong with the link
+        throw ("program failed to link:" + gl.getProgramInfoLog (program));
+    }
+    
+    return program;
+  };
+  
+  
+  /**
+   * Resize a canvas to match the size its displayed.
+   * @param {HTMLCanvasElement} canvas The canvas to resize.
+   * @param {number} [multiplier] amount to multiply by.
+   *    Pass in window.devicePixelRatio for native pixels.
+   * @return {boolean} true if the canvas was resized.
+   */
+  static resizeCanvasToDisplaySize(canvas) {
+    // Lookup the size the browser is displaying the canvas in CSS pixels.
+    const dpr = window.devicePixelRatio;
+    const displayWidth  = Math.round(canvas.clientWidth * dpr);
+    const displayHeight = Math.round(canvas.clientHeight * dpr);
+  
+      // Check if the canvas is not the same size.
+      const needResize = (canvas.width != displayWidth || canvas.height != displayHeight);
+  
+      if (needResize) {
+        // Make the canvas the same size
+        canvas.width  = displayWidth;
+        canvas.height = displayHeight;
+      }
+  
+      return needResize;
+  }
+
+}
