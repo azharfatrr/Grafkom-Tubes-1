@@ -1,3 +1,6 @@
+/**
+ * An abstract class for WebGL objects.
+ */
 abstract class WebGLObjects {
   // CLASS PROPERTIES
 

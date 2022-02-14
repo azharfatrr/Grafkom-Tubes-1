@@ -1,6 +1,9 @@
 import WebGLUtils from "../utils/WebGLUtils";
 import WebGLObjects from "./WebGLObject";
 
+/**
+ * A Class for rendering WebGL objects.
+ */
 class WebGLRenderer {
   // CLASS PROPERTIES
 
