@@ -1,3 +1,6 @@
+import Color from "./Color";
+import Point from "./Point";
+
 /**
  * An abstract class for WebGL objects.
  */
@@ -14,10 +17,10 @@ abstract class WebGLObjects {
   protected abstract nPoint: number;
 
   // The array of vertices position.
-  public position: number[];
+  protected position: Point[];
 
   // The color of object.
-  public color: number[];
+  protected color: Color;
 
   // The vertex buffer.
   protected positionBuffer: WebGLBuffer;
@@ -58,6 +61,31 @@ abstract class WebGLObjects {
     this.setColorAttribute();
   }
 
+  /**
+   * Set the position of the object from n vertices.
+   * The of position in parameter is MUST be equal to the number of vertices in the object. 
+   *
+   * @param position - The vertices point position.
+   */
+  setPosition(...position: Point[]) {
+    // Check if the number of vertices is equal to the number of position in parameter.
+    if (position.length !== this.nPoint) {
+      throw new Error(`The number of position in parameter must be equal to ${this.nPoint}.`);
+    }
+
+    // Set the position.
+    this.position = position;
+  }
+
+  /**
+   * Set the color of the object. 
+   *
+   * @param color - The color of the object.
+   */
+  setColor(color: Color) {
+    this.color = color;
+  }
+
 
   /**
    * Set the shader program that will be used to draw the object. 
@@ -89,6 +117,36 @@ abstract class WebGLObjects {
     this.colorAttributeLocation = this.gl.getAttribLocation(this.program, colorAttributeName);
   }
 
+
+  /**
+   * Flatten the Position to a Float32Array.
+   *
+   * @returns The flattened position array.
+   */
+  private flatPosition(): Float32Array {
+    const newPosition = [];
+    for (let i = 0; i < this.nPoint; i++) {
+      // position.push(this.position[i].x);
+      // position.push(this.position[i].y);
+      newPosition.push(...this.position[i].toTuple());
+    }
+    console.log(newPosition);
+    return new Float32Array(newPosition);
+  }
+
+  /**
+   * Flatten the Color to a Uint8Array.
+   *
+   * @returns The flattened color array.
+   */
+  private flatColor(): Uint8Array {
+    const newColor = [];
+    for (let i = 0; i < this.nPoint; i++) {
+      newColor.push(...this.color.toTuple());
+    }
+    return new Uint8Array(newColor);
+  }
+
   /**
    * Binds the vertex buffer to the gl context.
    */
@@ -97,12 +155,12 @@ abstract class WebGLObjects {
     // Start binding the position buffers.
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
     // Set the position.
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.position), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, this.flatPosition(), gl.STATIC_DRAW);
 
     // Start binding the color buffers.
     gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
     // Set the colors.
-    gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(this.color), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, this.flatColor(), gl.STATIC_DRAW);
   }
 
   /**

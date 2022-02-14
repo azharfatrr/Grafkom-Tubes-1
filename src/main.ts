@@ -1,4 +1,6 @@
 import Triangle from "./models/Triangle";
+import Color from "./types/Color";
+import Point from "./types/Point";
 import WebGLObject from "./types/WebGLObject";
 import WebGLRenderer from "./types/WebGLRenderer";
 import WebGLUtils from "./utils/WebGLUtils";
@@ -23,55 +25,45 @@ async function main() {
   let triangle = new Triangle(1, gl, program);
 
   // Set the position of the triangle.
-  // TODO: Create an interface for this.
-  triangle.position = [
-    0, 0,
-    0, 200,
-    200, 0,
-  ];
+  triangle.setPosition(new Point(0,0), new Point(0,500), new Point(500,0));
 
   // Set the color of the triangle.
-  // TODO: Create an interface for this.
-  triangle.color = [
-    255, 0, 0, 255,
-    255, 0, 0, 255,
-    255, 0, 0, 255,
-  ];
+  triangle.setColor(new Color(255,0,0));
 
 
-  let triangle2 = new Triangle(2, gl, program);
+  // let triangle2 = new Triangle(2, gl, program);
 
-  // Set the position of the triangle.
-  triangle2.position = [
-    0, 0,
-    0, 100,
-    100, 0,
-  ];
+  // // Set the position of the triangle.
+  // triangle2.position = [
+  //   0, 0,
+  //   0, 100,
+  //   100, 0,
+  // ];
 
-  // Set the color of the triangle.
-  triangle2.color = [
-    0, 255, 0, 255,
-    0, 255, 0, 255,
-    0, 255, 0, 255,
-  ];
+  // // Set the color of the triangle.
+  // triangle2.color = [
+  //   0, 255, 0, 255,
+  //   0, 255, 0, 255,
+  //   0, 255, 0, 255,
+  // ];
 
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl);
 
   // Add the triangle to the renderer.
-  webGLRenderer.addObject(triangle, triangle2);
+  webGLRenderer.addObject(triangle);
 
   // Render the scene.
   webGLRenderer.render();
 
-  triangle.color = [
-    0, 0, 255, 255,
-    0, 0, 255, 255,
-    0, 0, 255, 255,
-  ];
+  // triangle.color = [
+  //   0, 0, 255, 255,
+  //   0, 0, 255, 255,
+  //   0, 0, 255, 255,
+  // ];
 
-  // Render the scene.
-  webGLRenderer.render();
+  // // Render the scene.
+  // webGLRenderer.render();
 }
 
 
