@@ -1,13 +1,35 @@
 import Point, { IPoint } from "../types/Point";
 import WebGLObjects from "../types/WebGLObject";
+import { mod } from "../utils/Math";
 
-class Square extends WebGLObjects {
+class Rectangle extends WebGLObjects {
   // CLASS PROPERTIES
 
   // Number of vertices.
-  protected nPoint = 4;
+  protected _nPoint = 4;
 
   // CLASS METHODS
+
+  /**
+   * Set the new position for vertex in the rectangle. 
+   *
+   * @param idx - The index of vertex.
+   * @param point - The new position of vertex.
+   */
+  setVertex(idx: number, point: IPoint): void {
+    // Calculate new position for each vertex.
+    this.position[idx] = Point.fromIPoint(point);
+    if (idx % 2 === 0) {
+      // The even vertex is the top left or bottom right.
+      this.position[mod(idx - 1,4)].y = point.y;
+      this.position[mod(idx + 1,4)].x = point.x;
+    } else {
+      // The odd vertex is the top right or bottom left.
+      this.position[mod(idx - 1,4)].x = point.x;
+      this.position[mod(idx + 1,4)].y = point.y;
+    }
+    
+  }
 
   /**
    * Set the position of the vertices.
@@ -45,9 +67,9 @@ class Square extends WebGLObjects {
     // Draw the geometry.
     var primitiveType = this.gl.TRIANGLE_FAN;
     var offset = 0;
-    var count = this.nPoint;
+    var count = this._nPoint;
     this.gl.drawArrays(primitiveType, offset, count);
   }
 }
 
-export default Square;
+export default Rectangle;

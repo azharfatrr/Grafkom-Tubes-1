@@ -4,7 +4,7 @@ class Triangle extends WebGLObjects {
   // CLASS PROPERTIES
 
   // Number of vertices.
-  protected nPoint = 3;
+  protected _nPoint = 3;
 
   // CLASS METHODS
   
@@ -18,7 +18,7 @@ class Triangle extends WebGLObjects {
     // Draw the geometry.
     var primitiveType = this.gl.TRIANGLES;
     var offset = 0;
-    var count = this.nPoint;
+    var count = this._nPoint;
     this.gl.drawArrays(primitiveType, offset, count);
   }
 }

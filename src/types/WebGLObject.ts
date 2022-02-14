@@ -8,7 +8,10 @@ abstract class WebGLObjects {
   // CLASS PROPERTIES
 
   // The number of vertices.
-  protected abstract nPoint: number;
+  protected abstract _nPoint: number;
+  public get nPoint(): number {
+    return this._nPoint;
+  }
 
   // The id of object.
   protected _id: number;
@@ -79,8 +82,8 @@ abstract class WebGLObjects {
    */
   setPosition(...position: IPoint[]) {
     // Check if the number of vertices is equal to the number of position in parameter.
-    if (position.length !== this.nPoint) {
-      throw new Error(`The number of position in parameter must be equal to ${this.nPoint}.`);
+    if (position.length !== this._nPoint) {
+      throw new Error(`The number of position in parameter must be equal to ${this._nPoint}.`);
     }
 
     // Set the position.
@@ -129,11 +132,40 @@ abstract class WebGLObjects {
 
 
   /**
+   * Get the vertex position of object by its index. 
+   *
+   * @param idx - The index of the vertex.
+   * @returns The vertex position.
+   */
+  getVertex(idx: number): IPoint {
+    if (idx < 0 || idx >= this._nPoint) {
+      throw new Error(`The index ${idx} is out of bounds.`);
+    }
+
+    return this.position[idx];
+  }
+
+  /**
+   * Set the vertex position of object by its index. 
+   * 
+   * @param idx - The index of the vertex. 
+   * @param point - The vertex position.
+   */
+  setVertex(idx: number, point: IPoint) {
+    if (idx < 0 || idx >= this._nPoint) {
+      throw new Error(`The index ${idx} is out of bounds.`);
+    }
+
+    this.position[idx] = Point.fromIPoint(point);
+  }
+
+
+  /**
    * Validate that position already defined.
    */
   protected validatePosition() {
-    if (!this.position || this.position.length !== this.nPoint) {
-      throw new Error(`You must define ${this.nPoint} points in the object's position.`);
+    if (!this.position || this.position.length !== this._nPoint) {
+      throw new Error(`You must define ${this._nPoint} points in the object's position.`);
     }
   }
 
@@ -157,7 +189,7 @@ abstract class WebGLObjects {
     this.validatePosition();
 
     const newPosition = [];
-    for (let i = 0; i < this.nPoint; i++) {
+    for (let i = 0; i < this._nPoint; i++) {
       newPosition.push(...this.position[i].toTuple());
     }
     return new Float32Array(newPosition);
@@ -173,7 +205,7 @@ abstract class WebGLObjects {
     this.validateColor();
 
     const newColor = [];
-    for (let i = 0; i < this.nPoint; i++) {
+    for (let i = 0; i < this._nPoint; i++) {
       newColor.push(...this.color[i % this.color.length].toTuple());
     }
     return new Uint8Array(newColor);

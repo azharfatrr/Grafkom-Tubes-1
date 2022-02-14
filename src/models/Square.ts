@@ -5,7 +5,7 @@ class Square extends WebGLObjects {
   // CLASS PROPERTIES
 
   // Number of vertices.
-  protected nPoint = 4;
+  protected _nPoint = 4;
 
   // CLASS METHODS
 
@@ -52,7 +52,7 @@ class Square extends WebGLObjects {
     // Draw the geometry.
     var primitiveType = this.gl.TRIANGLE_FAN;
     var offset = 0;
-    var count = this.nPoint;
+    var count = this._nPoint;
     this.gl.drawArrays(primitiveType, offset, count);
   }
 }
