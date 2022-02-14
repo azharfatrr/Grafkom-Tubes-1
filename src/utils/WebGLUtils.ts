@@ -92,8 +92,9 @@ class WebGLUtils {
 
 
   /**
-   * Creates a default shader program from 2 shaders source.
-   *
+   * Creates a default shader program from 'vertex-shader.glsl' and 'fragment-shader.glsl'.
+   * Also sets the WebGL's Shader uniform 'u_resolution' variables.
+   * 
    * @param gl The WebGL context.
    * @return A program.
    */
@@ -175,7 +176,6 @@ class WebGLUtils {
         throw "Invalid uniform data length.";
     }
   }
-
 }
 
 export default WebGLUtils;

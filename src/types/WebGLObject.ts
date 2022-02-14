@@ -69,6 +69,11 @@ abstract class WebGLObjects {
   /**
    * Set the position of the object from n vertices.
    * The of position in parameter is MUST be equal to the number of vertices in the object. 
+   * Defining the point of position must be done in the counter clockwise direction, as example:
+   * - The first point is the top left corner.
+   * - The second point is the bottom left corner.
+   * - The third point is the bottom right corner.
+   * - etc...
    *
    * @param position - The vertices point position.
    */
@@ -126,18 +131,18 @@ abstract class WebGLObjects {
   /**
    * Validate that position already defined.
    */
-  private validatePosition() {
+  protected validatePosition() {
     if (!this.position || this.position.length !== this.nPoint) {
-      throw new Error(`You must define ${this.nPoint} points in the position.`);
+      throw new Error(`You must define ${this.nPoint} points in the object's position.`);
     }
   }
 
   /**
    * Validate that color already defined.
    */
-  private validateColor() {
+  protected validateColor() {
     if (!this.color) {
-      throw new Error('You must define a color.');
+      throw new Error("You must define object's color.");
     }
   }
 
@@ -147,7 +152,7 @@ abstract class WebGLObjects {
    *
    * @returns The flattened position array.
    */
-  private flatPosition(): Float32Array {
+  protected flatPosition(): Float32Array {
     // Validate the position.
     this.validatePosition();
 
@@ -163,7 +168,7 @@ abstract class WebGLObjects {
    *
    * @returns The flattened color array.
    */
-  private flatColor(): Uint8Array {
+  protected flatColor(): Uint8Array {
     // Validate the color.
     this.validateColor();
 
@@ -193,7 +198,7 @@ abstract class WebGLObjects {
 
   /**
    * Initialize ceremonies for drawing object.
-   * MUST be called before drawing.
+   * MUST be called before drawing. It's NOT recommended to override.
    */
   protected initDraw() {
     const gl = this.gl

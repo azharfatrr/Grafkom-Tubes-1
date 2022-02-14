@@ -7,12 +7,6 @@ class Triangle extends WebGLObjects {
   protected nPoint = 3;
 
   // CLASS METHODS
-
-  // Construct the object.
-  constructor(id: number, gl: WebGLRenderingContext, program: WebGLProgram) {
-    super(id, gl, program);
-  }
-
   
   /**
    * Draws the triangle object.

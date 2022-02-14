@@ -1,3 +1,5 @@
+import Rectangle from "./models/Rectangle";
+import Square from "./models/Square";
 import Triangle from "./models/Triangle";
 import WebGLRenderer from "./types/WebGLRenderer";
 import WebGLUtils from "./utils/WebGLUtils";
@@ -36,12 +38,27 @@ async function main() {
 
   triangle2.setColor({ r: 0, g: 255, b: 0 });
 
+  let rectangle = new Rectangle(3, gl, program);
+
+  rectangle.setPosition(
+    {x: 300, y: 300},
+    {x: 800, y: 500});
+  rectangle.setColor({ r: 0, g: 0, b: 255 });
+
+  let square = new Square(4, gl, program);
+
+  square.setPosition(
+    {x: 300, y: 300},
+    {x: 350, y: 350});
+
+  square.setColor({ r: 255, g: 255, b: 0 });
+  
 
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl);
 
   // Add the triangle to the renderer.
-  webGLRenderer.addObject(triangle, triangle2);
+  webGLRenderer.addObject(rectangle, triangle, triangle2, square);
 
   // Render the scene.
   webGLRenderer.render();
