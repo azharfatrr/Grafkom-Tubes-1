@@ -1,5 +1,5 @@
-import Color from "./Color";
-import Point from "./Point";
+import Color, { IColor } from "./Color";
+import Point, { IPoint } from "./Point";
 
 /**
  * An abstract class for WebGL objects.
@@ -7,14 +7,14 @@ import Point from "./Point";
 abstract class WebGLObjects {
   // CLASS PROPERTIES
 
+  // The number of vertices.
+  protected abstract nPoint: number;
+
   // The id of object.
   protected _id: number;
   public get id(): number {
-    return this.id;
+    return this._id;
   }
-
-  // The number of vertices.
-  protected abstract nPoint: number;
 
   // The array of vertices position.
   protected position: Point[];
@@ -57,9 +57,14 @@ abstract class WebGLObjects {
     this.colorBuffer = this.gl.createBuffer();
 
     // Set the attributes.
-    this.setPositionAttribute();
-    this.setColorAttribute();
+    this.setPositionAttributeLocation();
+    this.setColorAttributeLocation();
   }
+
+  /**
+   * Draws the object.
+   */
+  abstract draw();
 
   /**
    * Set the position of the object from n vertices.
@@ -67,14 +72,14 @@ abstract class WebGLObjects {
    *
    * @param position - The vertices point position.
    */
-  setPosition(...position: Point[]) {
+  setPosition(...position: IPoint[]) {
     // Check if the number of vertices is equal to the number of position in parameter.
     if (position.length !== this.nPoint) {
       throw new Error(`The number of position in parameter must be equal to ${this.nPoint}.`);
     }
 
     // Set the position.
-    this.position = position;
+    this.position = position.map(p => Point.fromIPoint(p));
   }
 
   /**
@@ -82,8 +87,8 @@ abstract class WebGLObjects {
    *
    * @param color - The color of the object.
    */
-  setColor(color: Color) {
-    this.color = color;
+  setColor(color: IColor) {
+    this.color = Color.fromIColor(color);
   }
 
 
@@ -102,7 +107,7 @@ abstract class WebGLObjects {
    * @param positionAttributeName - The name of the position attribute. Default: 'a_position'.
    * 
    */
-  setPositionAttribute(positionAttributeName: string = 'a_position') {
+  setPositionAttributeLocation(positionAttributeName: string = 'a_position') {
     // Set the position attribute location.
     this.positionAttributeLocation = this.gl.getAttribLocation(this.program, positionAttributeName);
   }
@@ -112,9 +117,28 @@ abstract class WebGLObjects {
    *
    * @param colorAttributeName - The name of the color attribute. Default: 'a_color'.
    */
-  setColorAttribute(colorAttributeName: string = 'a_color') {
+  setColorAttributeLocation(colorAttributeName: string = 'a_color') {
       // Set the color attribute location.
     this.colorAttributeLocation = this.gl.getAttribLocation(this.program, colorAttributeName);
+  }
+
+
+  /**
+   * Validate that position already defined.
+   */
+  private validatePosition() {
+    if (!this.position || this.position.length !== this.nPoint) {
+      throw new Error(`You must define ${this.nPoint} points in the position.`);
+    }
+  }
+
+  /**
+   * Validate that color already defined.
+   */
+  private validateColor() {
+    if (!this.color) {
+      throw new Error('You must define a color.');
+    }
   }
 
 
@@ -124,13 +148,13 @@ abstract class WebGLObjects {
    * @returns The flattened position array.
    */
   private flatPosition(): Float32Array {
+    // Validate the position.
+    this.validatePosition();
+
     const newPosition = [];
     for (let i = 0; i < this.nPoint; i++) {
-      // position.push(this.position[i].x);
-      // position.push(this.position[i].y);
       newPosition.push(...this.position[i].toTuple());
     }
-    console.log(newPosition);
     return new Float32Array(newPosition);
   }
 
@@ -140,6 +164,9 @@ abstract class WebGLObjects {
    * @returns The flattened color array.
    */
   private flatColor(): Uint8Array {
+    // Validate the color.
+    this.validateColor();
+
     const newColor = [];
     for (let i = 0; i < this.nPoint; i++) {
       newColor.push(...this.color.toTuple());
@@ -152,6 +179,7 @@ abstract class WebGLObjects {
    */
   protected bind() {
     const gl = this.gl;
+
     // Start binding the position buffers.
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
     // Set the position.
@@ -205,24 +233,6 @@ abstract class WebGLObjects {
     gl.vertexAttribPointer(
       this.colorAttributeLocation, size, type, normalize, stride, offset);
   }
-  
-  /**
-   * Draws the object.
-   */
-  abstract draw();
-
-  // draw() {
-  //   const gl = this.gl;
-
-  //   // Init the draw.
-  //   this.initDraw();
-        
-  //   // Draw the geometry.
-  //   var primitiveType = gl.TRIANGLES;
-  //   var offset = 0;
-  //   var count = 3;
-  //   gl.drawArrays(primitiveType, offset, count);
-  // }
 }
 
 export default WebGLObjects;

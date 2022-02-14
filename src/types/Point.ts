@@ -1,7 +1,16 @@
+
+/**
+ * Interface for a point.
+ */
+export interface IPoint {
+  x: number;
+  y: number;
+}
+
 /**
  * Class that represents a object's point.
  */
-class Point {
+export class Point implements IPoint {
   // CLASS PROPERTIES
   public x: number;
   public y: number;
@@ -37,6 +46,16 @@ class Point {
    */
   static fromTuple(tuple: [number, number]): Point {
     return new Point(tuple[0], tuple[1]);
+  }
+
+  /**
+   * Convert the IPoint object to a Point object.
+   *
+   * @param obj - the IPoint object.
+   * @returns A new Point.
+   */
+  static fromIPoint(obj: IPoint): Point {
+    return new Point(obj.x, obj.y);
   }
 
 

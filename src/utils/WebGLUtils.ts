@@ -63,8 +63,7 @@ class WebGLUtils {
   static async createProgram(
     gl: WebGLRenderingContext, 
     vertexShaderSource: string, 
-    fragShaderSource: string)
-    : Promise<WebGLProgram> {
+    fragShaderSource: string): Promise<WebGLProgram> {
     // Create the shaders.
     const vertexShader = await this.compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER)
     const fragmentShader = await this.compileShader(gl, fragShaderSource, gl.FRAGMENT_SHADER)
@@ -90,6 +89,26 @@ class WebGLUtils {
     
     return program;
   };
+
+
+  /**
+   * Creates a default shader program from 2 shaders source.
+   *
+   * @param gl The WebGL context.
+   * @return A program.
+   */
+  static async createDefaultProgram(
+    gl: WebGLRenderingContext): Promise<WebGLProgram> {
+
+    // Create the shader program.
+    const program = await this.createProgram(gl, 'vertex-shader.glsl', 'fragment-shader.glsl');
+
+    // Set up shader uniform variable resolution.
+    this.setUniformVariable(gl, program, "u_resolution", gl.canvas.width, gl.canvas.height);
+
+    // Return the shader program.
+    return program;
+  }
   
   
   /**
@@ -155,8 +174,6 @@ class WebGLUtils {
       default:
         throw "Invalid uniform data length.";
     }
-    
-
   }
 
 }

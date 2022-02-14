@@ -1,7 +1,4 @@
 import Triangle from "./models/Triangle";
-import Color from "./types/Color";
-import Point from "./types/Point";
-import WebGLObject from "./types/WebGLObject";
 import WebGLRenderer from "./types/WebGLRenderer";
 import WebGLUtils from "./utils/WebGLUtils";
 
@@ -16,53 +13,41 @@ async function main() {
   }
   
   // Use utils to compile the shaders and link into a program
-  let program = await WebGLUtils.createProgram(gl, "vertex-shader.glsl", "fragment-shader.glsl");
-
-  // Set up shader uniform variable resolution.
-  WebGLUtils.setUniformVariable(gl, program, "u_resolution", gl.canvas.width, gl.canvas.height);
+  let program = await WebGLUtils.createDefaultProgram(gl)
 
   // Create a new WebGLObject.
   let triangle = new Triangle(1, gl, program);
 
-  // Set the position of the triangle.
-  triangle.setPosition(new Point(0,0), new Point(0,500), new Point(500,0));
+  triangle.setPosition(
+    {x: 0, y: 0},
+    {x: 0, y: 500},
+    {x: 500, y: 0});
 
   // Set the color of the triangle.
-  triangle.setColor(new Color(255,0,0));
+  triangle.setColor({ r: 255, g: 0, b: 0 });
 
 
-  // let triangle2 = new Triangle(2, gl, program);
+  let triangle2 = new Triangle(2, gl, program);
 
-  // // Set the position of the triangle.
-  // triangle2.position = [
-  //   0, 0,
-  //   0, 100,
-  //   100, 0,
-  // ];
+  triangle2.setPosition(
+    {x: 0, y: 0},
+    {x: 0, y: 255},
+    {x: 255, y: 0});
 
-  // // Set the color of the triangle.
-  // triangle2.color = [
-  //   0, 255, 0, 255,
-  //   0, 255, 0, 255,
-  //   0, 255, 0, 255,
-  // ];
+  triangle2.setColor({ r: 0, g: 255, b: 0 });
+
 
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl);
 
   // Add the triangle to the renderer.
-  webGLRenderer.addObject(triangle);
+  webGLRenderer.addObject(triangle, triangle2);
 
   // Render the scene.
   webGLRenderer.render();
 
-  // triangle.color = [
-  //   0, 0, 255, 255,
-  //   0, 0, 255, 255,
-  //   0, 0, 255, 255,
-  // ];
+  // webGLRenderer.removeObject(2);
 
-  // // Render the scene.
   // webGLRenderer.render();
 }
 

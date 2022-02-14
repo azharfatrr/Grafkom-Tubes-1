@@ -1,7 +1,20 @@
 /**
  * Class that represents a object's color.
  */
-class Color {
+export interface IColor {
+  // CLASS PROPERTIES
+
+  // Red color value. (0-255)
+  r: number;
+  // Green color value. (0-255)
+  g: number;
+  // Blue color value. (0-255)
+  b: number;
+  // Alpha color value. (0-255)
+  a?: number;
+}
+ 
+export class Color implements IColor {
   // CLASS PROPERTIES
 
   // Red color value.
@@ -11,7 +24,7 @@ class Color {
   // Blue color value.
   public b: number;
   // Alpha color value.
-  public a: number;
+  public a?: number;
 
   // CLASS METHODS
 
@@ -65,6 +78,16 @@ class Color {
    */
   static fromTuple(tuple: [number, number, number, number]): Color {
     return new Color(tuple[0], tuple[1], tuple[2], tuple[3]);
+  }
+
+  /**
+   * Convert the IColor to Color object. 
+   *
+   * @param obj - The IColor object.
+   * @returns A new Color object.
+   */
+  static fromIColor(obj: IColor): Color {
+    return new Color(obj.r, obj.g, obj.b, obj.a);
   }
 }
 
