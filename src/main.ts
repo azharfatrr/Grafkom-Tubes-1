@@ -1,3 +1,4 @@
+import Triangle from "./models/Triangle";
 import WebGLObject from "./types/WebGLObject";
 import WebGLRenderer from "./types/WebGLRenderer";
 import WebGLUtils from "./utils/WebGLUtils";
@@ -19,7 +20,7 @@ async function main() {
   WebGLUtils.setUniformVariable(gl, program, "u_resolution", gl.canvas.width, gl.canvas.height);
 
   // Create a new WebGLObject.
-  let triangle = new WebGLObject(1, gl, program);
+  let triangle = new Triangle(1, gl, program);
 
   // Set the position of the triangle.
   // TODO: Create an interface for this.
@@ -37,11 +38,8 @@ async function main() {
     255, 0, 0, 255,
   ];
 
-  // Bind the triangle.
-  triangle.bind();
 
-
-  let triangle2 = new WebGLObject(2, gl, program);
+  let triangle2 = new Triangle(2, gl, program);
 
   // Set the position of the triangle.
   triangle2.position = [
@@ -57,9 +55,6 @@ async function main() {
     0, 255, 0, 255,
   ];
 
-  // Bind the triangle.
-  triangle2.bind();
-
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl);
 
@@ -74,9 +69,6 @@ async function main() {
     0, 0, 255, 255,
     0, 0, 255, 255,
   ];
-
-  // Bind the triangle.
-  triangle.bind();
 
   // Render the scene.
   webGLRenderer.render();

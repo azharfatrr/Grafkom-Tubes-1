@@ -1,4 +1,4 @@
-class WebGLObjects {
+abstract class WebGLObjects {
   // CLASS PROPERTIES
 
   // The id of object.
@@ -6,6 +6,9 @@ class WebGLObjects {
   public get id(): number {
     return this.id;
   }
+
+  // The number of vertices.
+  protected abstract nPoint: number;
 
   // The array of vertices position.
   public position: number[];
@@ -48,36 +51,45 @@ class WebGLObjects {
     this.colorBuffer = this.gl.createBuffer();
 
     // Set the attributes.
-    this.setAttributes();
+    this.setPositionAttribute();
+    this.setColorAttribute();
+  }
+
+
+  /**
+   * Set the shader program that will be used to draw the object. 
+   *
+   * @param program - The shader program.
+   */
+  setProgram(program: WebGLProgram) {
+    this.program = program;
   }
 
   /**
-   * Set the shader's attributes location.
+   * Set the shader's position attributes location.
    * 
-   * @param program - The shader program.
    * @param positionAttributeName - The name of the position attribute. Default: 'a_position'.
-   * @param colorAttributeName - The name of the color attribute. Default: 'a_color'.
+   * 
    */
-  setAttributes(
-    program?: WebGLProgram, 
-    positionAttributeName: string = 'a_position', 
-    colorAttributeName: string = 'a_color'): void {
-    // Check if a new shader program is given.
-    if (program) {
-      this.program = program;
-    }
-
+  setPositionAttribute(positionAttributeName: string = 'a_position') {
     // Set the position attribute location.
     this.positionAttributeLocation = this.gl.getAttribLocation(this.program, positionAttributeName);
+  }
 
-    // Set the color attribute location.
+  /**
+   * Set the shader's color attributes location. 
+   *
+   * @param colorAttributeName - The name of the color attribute. Default: 'a_color'.
+   */
+  setColorAttribute(colorAttributeName: string = 'a_color') {
+      // Set the color attribute location.
     this.colorAttributeLocation = this.gl.getAttribLocation(this.program, colorAttributeName);
   }
 
   /**
    * Binds the vertex buffer to the gl context.
    */
-  bind() {
+  protected bind() {
     const gl = this.gl;
     // Start binding the position buffers.
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
@@ -89,13 +101,17 @@ class WebGLObjects {
     // Set the colors.
     gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(this.color), gl.STATIC_DRAW);
   }
-  
+
   /**
-   * Draws the object.
+   * Initialize ceremonies for drawing object.
+   * MUST be called before drawing.
    */
-  draw() {
+  protected initDraw() {
     const gl = this.gl
-    
+
+    // Bind the buffers.
+    this.bind();
+        
     // Start drawing vertex.
     // Turn on the attribute.
     gl.enableVertexAttribArray(this.positionAttributeLocation);
@@ -127,13 +143,25 @@ class WebGLObjects {
     var offset = 0;        // start at the beginning of the buffer
     gl.vertexAttribPointer(
       this.colorAttributeLocation, size, type, normalize, stride, offset);
-        
-    // Draw the geometry.
-    var primitiveType = gl.TRIANGLES;
-    var offset = 0;
-    var count = 3;
-    gl.drawArrays(primitiveType, offset, count);
   }
+  
+  /**
+   * Draws the object.
+   */
+  abstract draw();
+
+  // draw() {
+  //   const gl = this.gl;
+
+  //   // Init the draw.
+  //   this.initDraw();
+        
+  //   // Draw the geometry.
+  //   var primitiveType = gl.TRIANGLES;
+  //   var offset = 0;
+  //   var count = 3;
+  //   gl.drawArrays(primitiveType, offset, count);
+  // }
 }
 
 export default WebGLObjects;
