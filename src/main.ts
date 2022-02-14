@@ -6,6 +6,7 @@ async function main() {
   // Get A WebGL context
   let canvas = document.querySelector("#canvasContent") as HTMLCanvasElement;
   let gl = canvas.getContext("webgl");
+
   if (!gl) {
     window.alert("Unable to initialize WebGL. Your browser or machine may not support it.");
     return;
@@ -14,8 +15,8 @@ async function main() {
   // Use utils to compile the shaders and link into a program
   let program = await WebGLUtils.createProgram(gl, "vertex-shader.glsl", "fragment-shader.glsl");
 
-  // look up uniform locations
-  let resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+  // Set up shader uniform variable resolution.
+  WebGLUtils.setUniformVariable(gl, program, "u_resolution", gl.canvas.width, gl.canvas.height);
 
   // Create a new WebGLObject.
   let triangle = new WebGLObject(1, gl, program);
@@ -63,18 +64,7 @@ async function main() {
   const webGLRenderer = new WebGLRenderer(gl);
 
   // Add the triangle to the renderer.
-  webGLRenderer.addObject(triangle);
-  webGLRenderer.addObject(triangle2);
-
-  // Tell it to use our program (pair of shaders)
-  gl.useProgram(program);
-
-  // set the resolution
-  gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
-
-  // Draw the triangle.
-  triangle.draw();
-  triangle2.draw();
+  webGLRenderer.addObject(triangle, triangle2);
 
   // Render the scene.
   webGLRenderer.render();
@@ -89,7 +79,7 @@ async function main() {
   triangle.bind();
 
   // Render the scene.
-  // webGLRenderer.render();
+  webGLRenderer.render();
 }
 
 

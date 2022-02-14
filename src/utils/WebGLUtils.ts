@@ -76,8 +76,10 @@ class WebGLUtils {
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     
-    // link the program.
+    // Link the program.
     gl.linkProgram(program);
+    // Tell it to use our program (pair of shaders)
+    gl.useProgram(program);
     
     // Check if it linked.
     var success = gl.getProgramParameter(program, gl.LINK_STATUS);
@@ -116,6 +118,45 @@ class WebGLUtils {
       }
   
       return needResize;
+  }
+
+
+  /**
+   * Set the WebGL's Shader uniform variables.  
+   *
+   * @param gl - The WebGL context.
+   * @param program - The WebGL shader program.
+   * @param uniformName - The uniform name.
+   * @param uniformData - The uniform data.
+   */
+  static setUniformVariable(
+    gl: WebGLRenderingContext, 
+    program: WebGLProgram,
+    uniformName: string,
+    ...uniformData: number[]
+  ) {
+    // Get the location of the uniform.
+    const uniformLocation = gl.getUniformLocation(program, uniformName);
+
+    // Set the uniform based on length of the data.
+    switch (uniformData.length) {
+      case 1:
+        gl.uniform1f(uniformLocation, uniformData[0]);
+        break;
+      case 2:
+        gl.uniform2f(uniformLocation, uniformData[0], uniformData[1]);
+        break;
+      case 3:
+        gl.uniform3f(uniformLocation, uniformData[0], uniformData[1], uniformData[2]);
+        break;
+      case 4:
+        gl.uniform4f(uniformLocation, uniformData[0], uniformData[1], uniformData[2], uniformData[3]);
+        break;
+      default:
+        throw "Invalid uniform data length.";
+    }
+    
+
   }
 
 }

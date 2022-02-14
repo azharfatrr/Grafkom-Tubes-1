@@ -29,12 +29,13 @@ class WebGLRenderer {
   /**
    * Add a WebGLObject to the renderer.
    * 
-   * @param object - The WebGLObject to add.
+   * @param objects - The WebGLObject to add.
    */
-  addObject(object: WebGLObjects) {
+  addObject(...objects: WebGLObjects[]) {
     // Add the object.
-    this.objects.push(object);
-    this.count++;
+    this.objects.push(...objects);
+    // Increment the count.
+    this.count += objects.length;
   }
 
   /**
