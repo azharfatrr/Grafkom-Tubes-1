@@ -1,4 +1,5 @@
-import WebGLObject from "./models/WebGLObject";
+import WebGLObject from "./types/WebGLObject";
+import WebGLRenderer from "./types/WebGLRenderer";
 import WebGLUtils from "./utils/WebGLUtils";
 
 async function main() {
@@ -12,12 +13,6 @@ async function main() {
   
   // Use utils to compile the shaders and link into a program
   let program = await WebGLUtils.createProgram(gl, "vertex-shader.glsl", "fragment-shader.glsl");
-  
-  // look up where the vertex data needs to go.
-  let positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-  
-  // look up where the color data needs to go.
-  let colorAttributeLocation = gl.getAttribLocation(program, "a_color");
 
   // look up uniform locations
   let resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
@@ -64,16 +59,12 @@ async function main() {
   // Bind the triangle.
   triangle2.bind();
 
-  // TODO: Create a render function.
-  // Resize the canvas to fit the window.
-  WebGLUtils.resizeCanvasToDisplaySize(gl.canvas);
+  // Call the render object.
+  const webGLRenderer = new WebGLRenderer(gl);
 
-  // Tell WebGL how to convert from clip space to pixels
-  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-  // Clear the canvas
-  gl.clearColor(0, 0, 0, 0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  // Add the triangle to the renderer.
+  webGLRenderer.addObject(triangle);
+  webGLRenderer.addObject(triangle2);
 
   // Tell it to use our program (pair of shaders)
   gl.useProgram(program);
@@ -84,6 +75,21 @@ async function main() {
   // Draw the triangle.
   triangle.draw();
   triangle2.draw();
+
+  // Render the scene.
+  webGLRenderer.render();
+
+  triangle.color = [
+    0, 0, 255, 255,
+    0, 0, 255, 255,
+    0, 0, 255, 255,
+  ];
+
+  // Bind the triangle.
+  triangle.bind();
+
+  // Render the scene.
+  // webGLRenderer.render();
 }
 
 

@@ -68,10 +68,10 @@ class WebGLObjects {
     }
 
     // Set the position attribute location.
-    this.positionAttributeLocation = this.gl.getAttribLocation(program, positionAttributeName);
+    this.positionAttributeLocation = this.gl.getAttribLocation(this.program, positionAttributeName);
 
     // Set the color attribute location.
-    this.colorAttributeLocation = this.gl.getAttribLocation(program, colorAttributeName);
+    this.colorAttributeLocation = this.gl.getAttribLocation(this.program, colorAttributeName);
   }
 
   /**
