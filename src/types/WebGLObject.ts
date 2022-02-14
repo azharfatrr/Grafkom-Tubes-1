@@ -20,7 +20,7 @@ abstract class WebGLObjects {
   protected position: Point[];
 
   // The color of object.
-  protected color: Color;
+  protected color: Color[];
 
   // The vertex buffer.
   protected positionBuffer: WebGLBuffer;
@@ -92,8 +92,8 @@ abstract class WebGLObjects {
    *
    * @param color - The color of the object.
    */
-  setColor(color: IColor) {
-    this.color = Color.fromIColor(color);
+  setColor(...color: IColor[]) {
+    this.color = color.map(c => Color.fromIColor(c));
   }
 
 
@@ -174,7 +174,7 @@ abstract class WebGLObjects {
 
     const newColor = [];
     for (let i = 0; i < this.nPoint; i++) {
-      newColor.push(...this.color.toTuple());
+      newColor.push(...this.color[i % this.color.length].toTuple());
     }
     return new Uint8Array(newColor);
   }

@@ -51,8 +51,17 @@ async function main() {
     {x: 300, y: 300},
     {x: 350, y: 350});
 
-  square.setColor({ r: 255, g: 255, b: 0 });
+  square.setColor(
+    { r: 0, g: 255, b: 0 }, 
+    { r: 0, g: 255, b: 0 }, 
+    { r: 0, g: 0, b: 255 }, 
+    { r: 0, g: 0, b: 255 });
   
+  rectangle.setColor(
+    { r: 255, g: 0, b: 0 },
+    { r: 255, g: 0, b: 0 }, 
+    { r: 0, g: 0, b: 255 }, 
+    { r: 0, g: 0, b: 255 });  
 
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl);
