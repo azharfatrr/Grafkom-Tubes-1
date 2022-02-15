@@ -28,14 +28,18 @@ class Rectangle extends WebGLObjects {
       this.position[mod(idx - 1,4)].x = point.x;
       this.position[mod(idx + 1,4)].y = point.y;
     }
-    
+
+    // Alternative method
+    // It's not working because the position is updated thus the idx.
+    // const anchorVertex = this.position[(idx + 2) % 4];
+    // this.setPosition(anchorVertex, point);
   }
 
   /**
    * Set the position of the vertices.
    * Only need 2 vertices for a rectangle:
-   * - Top left
-   * - Bottom right 
+   * - Anchor - First position
+   * - Corner - Second position
    *
    * @param position 
    */
@@ -45,12 +49,16 @@ class Rectangle extends WebGLObjects {
       throw new Error(`The number of position in parameter must be equal to 2.`);
     }
 
+    // Distance between the anchor and the corner.
+    const dx = position[1].x - position[0].x;
+    const dy = position[1].y - position[0].y;
+
     // Create complete position.
     const allPosition: IPoint[] = [
       { x: position[0].x, y: position[0].y },
-      { x: position[0].x, y: position[1].y },
-      { x: position[1].x, y: position[1].y },
-      { x: position[1].x, y: position[0].y }
+      { x: position[0].x, y: position[0].y + dy },
+      { x: position[0].x + dx, y: position[0].y + dy },
+      { x: position[0].x + dx , y: position[0].y }
     ];
 
     // Set the position.

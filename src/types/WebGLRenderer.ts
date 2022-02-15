@@ -1,7 +1,7 @@
 import { MIN_DISTANCE_BETWEEN_POINT } from "../configs/General";
 import WebGLUtils from "../utils/WebGLUtils";
 import Point, { IPoint } from "./Point";
-import { ObjectVertex } from "./Vertex";
+import { Vertex } from "./Vertex";
 import WebGLObjects from "./WebGLObject";
 
 /**
@@ -81,7 +81,7 @@ class WebGLRenderer {
    * @param position - The position to check nearby vertex.
    * @returns The nearest vertex with object information.
    */
-  getNearestVertex(position: IPoint): ObjectVertex {
+  getNearestVertex(position: IPoint): Vertex {
     // Iterate each object from last to first.
     for (let i = this.objects.length - 1; i >= 0; i--) {
       // Get the object.

@@ -1,7 +1,7 @@
 import Rectangle from "./models/Rectangle";
 import Square from "./models/Square";
 import Triangle from "./models/Triangle";
-import { ObjectVertex } from "./types/Vertex";
+import { Vertex } from "./types/Vertex";
 import WebGLRenderer from "./types/WebGLRenderer";
 import { getMousePos } from "./utils/General";
 import WebGLUtils from "./utils/WebGLUtils";
@@ -52,8 +52,8 @@ async function main() {
   let square = new Square(4, gl, program);
 
   square.setPosition(
-    {x: 300, y: 300},
-    {x: 350, y: 350});
+    {x: 500, y: 500},
+    {x: 700, y: 350});
 
   square.setColor(
     { r: 0, g: 255, b: 0 }, 
@@ -85,10 +85,11 @@ async function main() {
 
   // TEST MOVE VERTEX OF AN OBJECT.
   var isMoved = false;
-  var vertex: ObjectVertex;
+  var vertex: Vertex;
 
   canvas.addEventListener("mousedown", (event) => {
     const mousePos = getMousePos(canvas, event);
+    console.log(mousePos);
 
     if (!isMoved) {
       vertex = webGLRenderer.getNearestVertex(mousePos);
