@@ -6,7 +6,8 @@ import { Vertex } from "./types/Vertex";
 import WebGLRenderer from "./types/WebGLRenderer";
 import { getMousePos } from "./utils/General";
 import WebGLUtils from "./utils/WebGLUtils";
-
+import { Data } from "./utils/Data";
+import WebGLObjects from "./types/WebGLObject";
 // TODO: Create a function for select corner of an object.
 
 async function main() {
@@ -109,6 +110,24 @@ async function main() {
 
       webGLRenderer.render();
     }
+  });
+
+  const saveButton = document.getElementById("saveButton");
+  saveButton.addEventListener("click", () => {
+    const data: WebGLObjects[] = webGLRenderer.getAllObjects();
+    const fileContent: Data = {
+      objectData: data,
+    };
+    const jsonData = JSON.stringify(fileContent);
+    const type = "application/json";
+    let blob = new Blob([jsonData], { type: type });
+    let a = document.createElement("a"),
+      url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = "test.json"; // filename
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
   });
 }
 
