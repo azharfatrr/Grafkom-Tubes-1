@@ -77,8 +77,6 @@ class WebGLUtils {
     
     // Link the program.
     gl.linkProgram(program);
-    // Tell it to use our program (pair of shaders)
-    gl.useProgram(program);
     
     // Check if it linked.
     var success = gl.getProgramParameter(program, gl.LINK_STATUS);
@@ -103,6 +101,9 @@ class WebGLUtils {
 
     // Create the shader program.
     const program = await this.createProgram(gl, 'vertex-shader.glsl', 'fragment-shader.glsl');
+
+    // Tell it to use our program (pair of shaders)
+    gl.useProgram(program);
 
     // Set up shader uniform variable resolution.
     this.setUniformVariable(gl, program, "u_resolution", gl.canvas.width, gl.canvas.height);
