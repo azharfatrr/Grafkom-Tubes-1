@@ -1,0 +1,93 @@
+[
+  {
+    "_id": 3,
+    "gl": {},
+    "program": {},
+    "positionBuffer": {},
+    "colorBuffer": {},
+    "positionAttributeLocation": 0,
+    "colorAttributeLocation": 1,
+    "_nPoint": 4,
+    "position": [
+      { "x": 200, "y": 800 },
+      { "x": 200, "y": 300 },
+      { "x": 800, "y": 300 },
+      { "x": 800, "y": 800 }
+    ],
+    "color": [
+      { "r": 255, "g": 0, "b": 0, "a": 255 },
+      { "r": 255, "g": 0, "b": 0, "a": 255 },
+      { "r": 0, "g": 0, "b": 255, "a": 255 },
+      { "r": 0, "g": 0, "b": 255, "a": 255 }
+    ]
+  },
+  {
+    "_id": 1,
+    "gl": {},
+    "program": {},
+    "positionBuffer": {},
+    "colorBuffer": {},
+    "positionAttributeLocation": 0,
+    "colorAttributeLocation": 1,
+    "_nPoint": 3,
+    "position": [
+      { "x": 0, "y": 0 },
+      { "x": 0, "y": 500 },
+      { "x": 500, "y": 0 }
+    ],
+    "color": [{ "r": 255, "g": 0, "b": 0, "a": 255 }]
+  },
+  {
+    "_id": 2,
+    "gl": {},
+    "program": {},
+    "positionBuffer": {},
+    "colorBuffer": {},
+    "positionAttributeLocation": 0,
+    "colorAttributeLocation": 1,
+    "_nPoint": 3,
+    "position": [
+      { "x": 0, "y": 0 },
+      { "x": 0, "y": 255 },
+      { "x": 255, "y": 0 }
+    ],
+    "color": [{ "r": 0, "g": 255, "b": 0, "a": 255 }]
+  },
+  {
+    "_id": 4,
+    "gl": {},
+    "program": {},
+    "positionBuffer": {},
+    "colorBuffer": {},
+    "positionAttributeLocation": 0,
+    "colorAttributeLocation": 1,
+    "_nPoint": 4,
+    "position": [
+      { "x": 500, "y": 500 },
+      { "x": 500, "y": 350 },
+      { "x": 650, "y": 350 },
+      { "x": 650, "y": 500 }
+    ],
+    "color": [
+      { "r": 0, "g": 255, "b": 0, "a": 255 },
+      { "r": 0, "g": 255, "b": 0, "a": 255 },
+      { "r": 0, "g": 0, "b": 255, "a": 255 },
+      { "r": 0, "g": 0, "b": 255, "a": 255 }
+    ]
+  },
+  {
+    "_id": 5,
+    "gl": {},
+    "program": {},
+    "positionBuffer": {},
+    "colorBuffer": {},
+    "positionAttributeLocation": 0,
+    "colorAttributeLocation": 1,
+    "_nPoint": 2,
+    "position": [
+      { "x": 200, "y": 700 },
+      { "x": 800, "y": 700 }
+    ],
+    "color": [{ "r": 0, "g": 255, "b": 255, "a": 255 }]
+  }
+]

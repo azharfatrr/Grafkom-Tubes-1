@@ -75,6 +75,7 @@ async function main() {
 
   // Render the scene.
   webGLRenderer.render();
+  console.log(webGLRenderer.getAllObjects());
 
   // Render the scene.
   // webGLRenderer.render();
@@ -83,8 +84,8 @@ async function main() {
   // webGLRenderer.render();
 
   // TEST MOVE VERTEX OF AN OBJECT.
-  var isMoved = false;
-  var vertex: Vertex;
+  let isMoved = false;
+  let vertex: Vertex;
 
   canvas.addEventListener("mousedown", (event) => {
     const mousePos = getMousePos(canvas, event);
@@ -118,6 +119,7 @@ async function main() {
     const fileContent: Data = {
       objectData: data,
     };
+    // const fileContent = data;
     const jsonData = JSON.stringify(fileContent);
     const type = "application/json";
     let blob = new Blob([jsonData], { type: type });
@@ -129,6 +131,71 @@ async function main() {
     a.click();
     window.URL.revokeObjectURL(url);
   });
+
+  // const loadButton = document.getElementById("loadButton");
+
+  document.getElementById("load").onclick = function () {
+    let files = document.getElementById("selectFiles").files;
+    console.log(files);
+    if (files.length <= 0) {
+      return false;
+    }
+
+    let fr = new FileReader();
+
+    fr.onload = function (e) {
+      console.log(e);
+      let result = JSON.parse(e.target.result) as Data;
+      let formatted = JSON.stringify(result, null, 2);
+      document.getElementById("result").value = formatted; // display json in textarea
+
+      // TODO load JSON to renderer
+      let loadedObjectsArray = [];
+      result.objectData.forEach(function (val) {
+        console.log(val);
+        loadedObjectsArray.push(val);
+        // val.draw();
+        let obj = JSON.parse(val.object) as Object;
+        console.log(obj);
+        // loadedObjectsArray.push(obj);
+      });
+
+      // console.log(result.objectData);
+      // console.log("webGLRenderer" + webGLRenderer.getAllObjects());
+      // console.log("loaded objects: " + loadedObjectsArray);
+      // webGLRenderer.addObject(loadedObjectsArray);
+      // console.log("after loaded objects added: ");
+      // console.log(webGLRenderer.getAllObjects()[0]);
+      // // error di draw & iterating
+      // // loadedObjectsArray.forEach(function (val) {
+      // //   val.draw();
+      // // });
+      // webGLRenderer.render();
+
+      // result.objectData.forEach(function (obj) {
+      //   let object = JSON.parse(obj) as Object;
+      //   console.log(object);
+      //   // console.log(obj);
+      //   // loadedObjectsArray.push(obj);
+      // });
+
+      // Coba2
+      // // Call the render object.
+      // const webGLRenderer = new WebGLRenderer(gl);
+
+      // // Add the loaded objects
+      // webGLRenderer.addObject(loadedObjectsArray);
+      // console.log(webGLRenderer.getAllObjects());
+
+      // Render the scene.
+      // webGLRenderer.render();
+
+      // 1. iterate, pisahin data tiap objek
+      // 2. parse data tiap objek, masukin ke renderer (add objek)
+    };
+
+    fr.readAsText(files.item(0));
+  };
 }
 
 main();

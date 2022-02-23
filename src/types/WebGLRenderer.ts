@@ -52,6 +52,16 @@ class WebGLRenderer {
     this.count += objects.length;
   }
 
+  // /**
+  //  * Add a WebGLObject to the renderer.
+  //  *
+  //  * @param objects - The WebGLObject to add.
+  //  */
+  // addObjects(objArray: WebGLObjects[]) {
+  //   // Add the object.
+  //   this.objects.push(objArray);
+  //   this.count += objArray.length;
+  // }
   /**
    * Get a WebGLObject from the renderer.
    *

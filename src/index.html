@@ -39,13 +39,14 @@
       <button type="button" class="btn btn-primary" id="changeColorButton">
         Change Color
       </button>
-      <button type="button" class="btn btn-primary" id="loadButton">
+      <!-- <button type="button" class="btn btn-primary" id="loadButton">
         Load
-      </button>
+      </button> -->
       <button type="button" class="btn btn-primary" id="saveButton">
         Save
       </button>
     </div>
+
     <p>Pengguna dapat:</p>
     <ol>
       <li>Menggeser titik kontrol/simpul dengan mouse.</li>
@@ -53,6 +54,10 @@
       <li>Mengubah ukuran sisi persegi</li>
       <li>Mengubah warna poligon</li>
     </ol>
+
+    <input type="file" id="selectFiles" value="Import" />
+    <button id="load">Import</button>
+    <textarea id="result"> </textarea>
     <!-- <p id="objectId">Daftar objek:</p> -->
     <canvas width="1000px" height="1000px" id="canvasContent"> </canvas>
     <script src="main.js" type="module"></script>
