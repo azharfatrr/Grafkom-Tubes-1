@@ -1,7 +1,11 @@
+import { Model } from "../configs/General";
 import WebGLObjects from "../types/WebGLObject";
 
 class Triangle extends WebGLObjects {
   // CLASS PROPERTIES
+
+  // The model of this object.
+  protected _model = Model.TRIANGLE;
 
   // Number of vertices.
   protected _nPoint = 3;

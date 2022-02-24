@@ -1,3 +1,4 @@
+import { Model } from "../configs/General";
 import Color, { IColor } from "./Color";
 import Point, { IPoint } from "./Point";
 
@@ -6,6 +7,12 @@ import Point, { IPoint } from "./Point";
  */
 abstract class WebGLObjects {
   // CLASS PROPERTIES
+
+  // The type model of the object.
+  protected abstract _model: Model;
+  public get type(): Model {
+    return this._model;
+  }
 
   // The number of vertices.
   protected abstract _nPoint: number;
