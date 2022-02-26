@@ -1,9 +1,14 @@
 /* make http and body fill up all area  */
-html, body {
-  height: 100%;
+html {
   margin: 0;
+  padding: 0;
   /* background-color: #616161; */
 }
+
+body {
+  margin: 0 20px
+}
+
 /* make the canvas fill its container */
 canvas {
   background-color: white;
@@ -26,9 +31,14 @@ select {
 .main-container {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  align-items: flex-start;
-  justify-content: space-evenly;
+  grid-gap: 10px;
+  align-items: start;
+  justify-content: center;
   height: 100%;
+}
+
+#canvas-content {
+  margin: 30px auto;
 }
 
 .menu-tools {
@@ -36,9 +46,26 @@ select {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 20px 10px;
+  margin: 20px 0px;
 }
 
 .saveContainer {
-  margin: 20px auto;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.saveContainer #inputFile {
+  margin: 5px auto;
+}
+
+
+.menu-help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px;
 }

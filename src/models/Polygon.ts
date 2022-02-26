@@ -18,7 +18,7 @@ class Polygon extends WebGLObject {
    *
    * @param position 
    */
-  constructPosition(...position: IPoint[]): void {
+  setPosition(...position: IPoint[]): void {
     // Set the number of vertices.
     this._nPoint = position.length;
     this._constructPoint = this._nPoint;

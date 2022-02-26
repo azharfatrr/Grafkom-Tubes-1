@@ -24,7 +24,7 @@ export default class ModelFactory {
    * @param color - The color of the object.
    * @returns WebGLObjects
    */
-  createModel(model: Model, color: IColor, ...position: IPoint[]): WebGLObject {
+  createModel(model: Model, color: IColor[], position: IPoint[]): WebGLObject {
     // Check the length of the position.
     if (position.length === 0) {
       throw new Error("The position array is empty.");
@@ -70,7 +70,7 @@ export default class ModelFactory {
     }
 
     // Set the object color.
-    object.constructColor(color);
+    object.constructColor(...color);
 
     // Return the object.
     return object;

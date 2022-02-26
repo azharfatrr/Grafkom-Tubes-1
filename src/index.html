@@ -34,17 +34,22 @@
             <input type="color" value="#0000FF" id="color">
             
             <div class="saveContainer">
-                <input type="button" value="Save" id="saveButton">
-                <input type="button" value="Load" id="loadButton">
+                <p>Save & Load</p>
+                <div>
+                    <input type="button" value="Save" id="saveButton">
+                    <input type="button" value="Load" id="loadButton">
+                </div>
+                <input type="button" value="Clear" id="clearButton">
+                <input type="file" id="inputFile" accept=".json">
             </div>
 
             <div class="fileContainer">
-                <input type="file" id="inputFile" accept=".json">
+                
             </div>
 
         </div>
         
-        <canvas width="700px" height="700px" id="canvasContent"></canvas>
+        <canvas width="700px" height="700px" id="canvas-content"></canvas>
 
         <div class="menu-help">
             <h1>HELP</h1>

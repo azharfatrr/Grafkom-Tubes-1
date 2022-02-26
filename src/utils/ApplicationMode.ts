@@ -7,7 +7,7 @@ import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
 import { getMousePos } from "./Mouse";
 
-export default class ProgramMode {
+export default class ApplicationMode {
   // ATTRIBUTES.
   private _webGLRenderer: WebGLRenderer;
 
@@ -109,7 +109,7 @@ export default class ProgramMode {
         // Check if the number of vertices is already reached.
         if (this._vertices.length === numVertices) {
           // Create the object.
-          object = factory.createModel(model, color, ...this._vertices);
+          object = factory.createModel(model, [color], this._vertices);
 
           // Add the object to the renderer.
           this._webGLRenderer.addObject(object);
@@ -122,7 +122,7 @@ export default class ProgramMode {
       }
 
       // Create the object.
-      object = factory.createModel(model, color, mousePos);
+      object = factory.createModel(model, [color], [mousePos]);
 
       // Add the object to the renderer.
       this._webGLRenderer.addObject(object);
