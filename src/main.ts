@@ -143,7 +143,7 @@ async function main() {
     fr.onload = function (e) {
       console.log(e);
       let loadedData = JSON.parse(e.target.result) as WebGLObjects[];
-      let formatted = JSON.stringify(result, null, 2);
+      let formatted = JSON.stringify(loadedData, null, 2);
       // document.getElementById("result").textContent = formatted; // display json in textarea
 
       // console.log("Object sebelum:", webGLRenderer.getAllObjects());
