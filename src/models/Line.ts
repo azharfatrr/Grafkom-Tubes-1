@@ -1,8 +1,11 @@
+import { Model } from "../configs/General";
 import WebGLObjects from "../types/WebGLObject";
 
 class Line extends WebGLObjects {
   // CLASS PROPERTIES
 
+  // The model of this object.
+  protected _model = Model.LINE;
   // Number of vertices.
   protected _nPoint = 2;
 

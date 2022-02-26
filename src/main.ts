@@ -6,8 +6,8 @@ import { Vertex } from "./types/Vertex";
 import WebGLRenderer from "./types/WebGLRenderer";
 import { getMousePos } from "./utils/General";
 import WebGLUtils from "./utils/WebGLUtils";
-import { Data } from "./utils/Data";
 import WebGLObjects from "./types/WebGLObject";
+import { convertJsonToObject } from "./utils/Converter";
 // TODO: Create a function for select corner of an object.
 
 async function main() {
@@ -70,14 +70,14 @@ async function main() {
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl);
 
-  // Add the triangle to the renderer.
-  webGLRenderer.addObject(rectangle, triangle, triangle2, square, line1);
+  // // Add the triangle to the renderer.
+  // webGLRenderer.addObject(rectangle, triangle, triangle2, square, line1);
 
-  // Render the scene.
-  webGLRenderer.render();
-  console.log(webGLRenderer.getAllObjects());
+  // // Render the scene.
+  // webGLRenderer.render();
+  // console.log(webGLRenderer.getAllObjects());
 
-  // Render the scene.
+  // // Render the scene.
   // webGLRenderer.render();
   // webGLRenderer.removeObject(2);
 
@@ -116,10 +116,7 @@ async function main() {
   const saveButton = document.getElementById("saveButton");
   saveButton.addEventListener("click", () => {
     const data: WebGLObjects[] = webGLRenderer.getAllObjects();
-    const fileContent: Data = {
-      objectData: data,
-    };
-    // const fileContent = data;
+    const fileContent = data;
     const jsonData = JSON.stringify(fileContent);
     const type = "application/json";
     let blob = new Blob([jsonData], { type: type });
@@ -145,53 +142,18 @@ async function main() {
 
     fr.onload = function (e) {
       console.log(e);
-      let result = JSON.parse(e.target.result) as Data;
+      let loadedData = JSON.parse(e.target.result) as WebGLObjects[];
       let formatted = JSON.stringify(result, null, 2);
-      document.getElementById("result").value = formatted; // display json in textarea
+      // document.getElementById("result").textContent = formatted; // display json in textarea
 
-      // TODO load JSON to renderer
-      let loadedObjectsArray = [];
-      result.objectData.forEach(function (val) {
-        console.log(val);
-        loadedObjectsArray.push(val);
-        // val.draw();
-        let obj = JSON.parse(val.object) as Object;
-        console.log(obj);
-        // loadedObjectsArray.push(obj);
+      // console.log("Object sebelum:", webGLRenderer.getAllObjects());
+      // console.log("Result:", result);
+      loadedData.forEach(function (val) {
+        let convertedJson = convertJsonToObject(val, gl, program);
+        webGLRenderer.addObject(convertedJson);
       });
-
-      // console.log(result.objectData);
-      // console.log("webGLRenderer" + webGLRenderer.getAllObjects());
-      // console.log("loaded objects: " + loadedObjectsArray);
-      // webGLRenderer.addObject(loadedObjectsArray);
-      // console.log("after loaded objects added: ");
-      // console.log(webGLRenderer.getAllObjects()[0]);
-      // // error di draw & iterating
-      // // loadedObjectsArray.forEach(function (val) {
-      // //   val.draw();
-      // // });
-      // webGLRenderer.render();
-
-      // result.objectData.forEach(function (obj) {
-      //   let object = JSON.parse(obj) as Object;
-      //   console.log(object);
-      //   // console.log(obj);
-      //   // loadedObjectsArray.push(obj);
-      // });
-
-      // Coba2
-      // // Call the render object.
-      // const webGLRenderer = new WebGLRenderer(gl);
-
-      // // Add the loaded objects
-      // webGLRenderer.addObject(loadedObjectsArray);
-      // console.log(webGLRenderer.getAllObjects());
-
       // Render the scene.
-      // webGLRenderer.render();
-
-      // 1. iterate, pisahin data tiap objek
-      // 2. parse data tiap objek, masukin ke renderer (add objek)
+      webGLRenderer.render();
     };
 
     fr.readAsText(files.item(0));
