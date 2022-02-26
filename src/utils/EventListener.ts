@@ -6,227 +6,224 @@ import WebGLObjects from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
 import { getMousePos } from "./Mouse";
 
-// Global Variable Mode.
-let MODE: Mode;
+export default class ModeListener {
+  // ATTRIBUTES.
+  private _webGLRenderer: WebGLRenderer;
 
-/**
- * Initialize the application.
- */
-export function startup(webGLRenderer: WebGLRenderer) {
-  initMode(webGLRenderer);
-}
+  private _mode: Mode;
 
-/**
- * Initialize the mode and listener for any change in mode.
- */
-function initMode(webGLRenderer: WebGLRenderer) {
-  // Get the mode input.
-  let modeElement = (<HTMLInputElement>document.getElementById("mode"))
+  private _canvas: HTMLCanvasElement;
 
-  // Get the value of the mode.
-  MODE = <Mode>modeElement.value;
+  // METHODS.
+  /**
+   * Construct the ModeListener.
+   * @param webGLRenderer 
+   * @param canvas
+   */
+  constructor(webGLRenderer: WebGLRenderer, canvas: HTMLCanvasElement) {
+    this._webGLRenderer = webGLRenderer;
+    this._canvas = canvas;
 
-  // Add event listener when the mode is changed.
-  modeElement.addEventListener("change", (event) => {
-    MODE = <Mode>(<HTMLInputElement>event.target).value;
-  });
+    this.init();
+  }
 
-  // Add event listener to draw mode.
-  drawMode(webGLRenderer);
+  /**
+   * Initialize the application.
+   */
+  private init(): void {
+    // Change the cursor.
+    this._canvas.style.cursor = "crosshair";
 
-  // Add event listener to move mode.
-  moveMode(webGLRenderer);
+    // Get the mode input.
+    let modeElement = (<HTMLInputElement>document.getElementById("mode"))
 
-  // Add event listener to paint mode.
-  paintMode(webGLRenderer);
-}
+    // Initialize the mode listener.
+    this._mode = <Mode>modeElement.value;
 
+    // Add event listener when the mode is changed.
+    modeElement.addEventListener("change", (event) => {
+      this._mode = <Mode>(<HTMLInputElement>event.target).value;
+    });
 
-/**
- * Initialize the draw mode.
- * @param webGLRenderer
- */
-function drawMode(webGLRenderer: WebGLRenderer) {
-  // Get the canvas.
-  let canvas = document.querySelector("#canvasContent") as HTMLCanvasElement;
+    // Add event listener to draw mode.
+    this.drawMode();
 
-  // The object.
-  let object: WebGLObjects;
+    // Add event listener to move mode.
+    this.moveMode();
 
-  // The state of drawing.
-  let isDrawing = false;
+    // Add event listener to paint mode.
+    this.paintMode();
+  }
 
-  // Add event listener when mouse is down.
-  canvas.addEventListener("mousedown", (event) => {
-    // Check if the mode is draw.
-    if (MODE !== Mode.Draw) {
-      return;
-    }
+  /**
+   * Add event listener to draw mode.
+   */
+  private drawMode(): void {
+    // The object.
+    let object: WebGLObjects;
 
-    // Create the factory for creating the object.
-    let factory = new ModelFactory(webGLRenderer);
+    // The state of drawing.
+    let isDrawing = false;
 
-    // Get the selected model.
-    let shapeElement = (<HTMLInputElement>document.getElementById("shape"));
-    let model = <Model>shapeElement.value;
+    // Add event listener when mouse is down.
+    this._canvas.addEventListener("mousedown", (event) => {
+      // Check if the mode is draw.
+      if (this._mode !== Mode.Draw) {
+        return;
+      }
 
-    // Get the selected color.
-    let colorElement = (<HTMLInputElement>document.getElementById("color"));
-    let color = Color.hexToRGB(<string>colorElement.value);
+      // Create the factory for creating the object.
+      let factory = new ModelFactory(this._webGLRenderer);
 
-    // Get the mouse position.
-    let mousePos = getMousePos(canvas, event);
+      // Get the selected model.
+      let shapeElement = (<HTMLInputElement>document.getElementById("shape"));
+      let model = <Model>shapeElement.value;
 
-    // Create the object.
-    object = factory.createModel(model, color, mousePos);
+      // Get the selected color.
+      let colorElement = (<HTMLInputElement>document.getElementById("color"));
+      let color = Color.hexToRGB(<string>colorElement.value);
 
-    // Add the object to the renderer.
-    webGLRenderer.addObject(object);
-    webGLRenderer.render();
-
-    // Toggle the state of drawing.
-    isDrawing = true;
-  })
-
-
-  // Add event listener when mouse move.
-  canvas.addEventListener("mousemove", (event) => {
-    // Check if the mode is draw.
-    if (MODE !== Mode.Draw) {
-      return;
-    }
-
-    if (isDrawing) {
       // Get the mouse position.
-      let mousePos = getMousePos(canvas, event);
+      let mousePos = getMousePos(this._canvas, event);
 
-      // Update the object.
-      object.setVertex(1, mousePos);
+      // Create the object.
+      object = factory.createModel(model, color, mousePos);
+
+      // Add the object to the renderer.
+      this._webGLRenderer.addObject(object);
+      this._webGLRenderer.render();
+
+      // Toggle the state of drawing.
+      isDrawing = true;
+    })
+
+
+    // Add event listener when mouse move.
+    this._canvas.addEventListener("mousemove", (event) => {
+      // Check if the mode is draw.
+      if (this._mode !== Mode.Draw) {
+        return;
+      }
+
+      if (isDrawing) {
+        // Get the mouse position.
+        let mousePos = getMousePos(this._canvas, event);
+
+        // Update the object.
+        object.setVertex(1, mousePos);
+
+        // Render the object.
+        this._webGLRenderer.render();
+      }
+    })
+
+    // Add event listener when mouse up.
+    this._canvas.addEventListener("mouseup", (event) => {
+      // Check if the mode is draw.
+      if (this._mode !== Mode.Draw) {
+        return;
+      }
+
+      // Toggle the state of drawing.
+      isDrawing = false;
+    })
+  }
+
+  /**
+   * Add event listener to move mode.
+   */
+  private moveMode(): void {
+    // The object vertex.
+    let vertex: Vertex;
+
+    // The state of moving.
+    let isMoving = false;
+
+    // Add event listener when mouse is down.
+    this._canvas.addEventListener("mousedown", (event) => {
+      // Check if the mode is move.
+      if (this._mode !== Mode.Move) {
+        return;
+      }
+
+      // Get the mouse position.
+      let mousePos = getMousePos(this._canvas, event);
+
+      // Get the vertex.
+      vertex = this._webGLRenderer.getNearestVertex(mousePos);
+      if (!vertex) return;
+
+      // Toggle the state of moving.
+      isMoving = true;
+    })
+
+    // Add event listener when mouse move.
+    this._canvas.addEventListener("mousemove", (event) => {
+      // Check if the mode is move.
+      if (this._mode !== Mode.Move) {
+        return;
+      }
+
+      if (isMoving) {
+        // Get the mouse position.
+        let mousePos = getMousePos(this._canvas, event);
+
+        // Update the object from its vertex.
+        let object = this._webGLRenderer.getObject(vertex.objectId);
+        object.setVertex(vertex.vertexIdx, mousePos);
+
+        // Render the object.
+        this._webGLRenderer.render();
+      }
+    })
+
+    // Add event listener when mouse up.
+    this._canvas.addEventListener("mouseup", (event) => {
+      // Check if the mode is move.
+      if (this._mode !== Mode.Move) {
+        return;
+      }
+
+      // Toggle the state of moving.
+      isMoving = false;
+    })
+  }
+
+  /**
+   * Add event listener to paint mode.
+   */
+  private paintMode(): void {
+    // The object vertex.
+    let vertex: Vertex;
+
+    // Add event listener when mouse is down.
+    this._canvas.addEventListener("click", (event) => {
+      // Check if the mode is move.
+      if (this._mode !== Mode.Paint) {
+        return;
+      }
+
+      // Get the mouse position.
+      let mousePos = getMousePos(this._canvas, event);
+
+      // Get the vertex.
+      vertex = this._webGLRenderer.getNearestVertex(mousePos);
+      if (!vertex) return;
+
+      console.log(vertex);
+
+      // Get the selected color.
+      let colorElement = (<HTMLInputElement>document.getElementById("color"));
+      let color = Color.hexToRGB(<string>colorElement.value);
+
+      // Get the object.
+      let object = this._webGLRenderer.getObject(vertex.objectId);
+
+      // Change object color.
+      object.setColor(color);
 
       // Render the object.
-      webGLRenderer.render();
-    }
-  })
-
-  // Add event listener when mouse up.
-  canvas.addEventListener("mouseup", (event) => {
-    // Check if the mode is draw.
-    if (MODE !== Mode.Draw) {
-      return;
-    }
-
-    // Toggle the state of drawing.
-    isDrawing = false;
-  })
+      this._webGLRenderer.render();
+    })
+  }
 }
-
-/**
- * Initialize the move mode. 
- *
- * @param webGLRenderer The renderer.
- */
-function moveMode(webGLRenderer: WebGLRenderer) {
-  // Get the canvas.
-  let canvas = document.querySelector("#canvasContent") as HTMLCanvasElement;
-
-  // The object vertex.
-  let vertex: Vertex;
-
-  // The state of moving.
-  let isMoving = false;
-
-  // Add event listener when mouse is down.
-  canvas.addEventListener("mousedown", (event) => {
-    // Check if the mode is move.
-    if (MODE !== Mode.Move) {
-      return;
-    }
-
-    // Get the mouse position.
-    let mousePos = getMousePos(canvas, event);
-
-    // Get the vertex.
-    vertex = webGLRenderer.getNearestVertex(mousePos);
-    if (!vertex) return;
-
-    // Toggle the state of moving.
-    isMoving = true;
-  })
-
-  // Add event listener when mouse move.
-  canvas.addEventListener("mousemove", (event) => {
-    // Check if the mode is move.
-    if (MODE !== Mode.Move) {
-      return;
-    }
-
-    if (isMoving) {
-      // Get the mouse position.
-      let mousePos = getMousePos(canvas, event);
-
-      // Update the object from its vertex.
-      let object = webGLRenderer.getObject(vertex.objectId);
-      object.setVertex(vertex.vertexIdx, mousePos);
-
-      // Render the object.
-      webGLRenderer.render();
-    }
-  })
-
-  // Add event listener when mouse up.
-  canvas.addEventListener("mouseup", (event) => {
-    // Check if the mode is move.
-    if (MODE !== Mode.Move) {
-      return;
-    }
-
-    // Toggle the state of moving.
-    isMoving = false;
-  })
-}
-
-
-function paintMode(webGLRenderer: WebGLRenderer) {
-  // Get the canvas.
-  let canvas = document.querySelector("#canvasContent") as HTMLCanvasElement;
-
-  // The object vertex.
-  let vertex: Vertex;
-
-  // Add event listener when mouse is down.
-  canvas.addEventListener("click", (event) => {
-    // Check if the mode is move.
-    if (MODE !== Mode.Paint) {
-      return;
-    }
-
-    // Get the mouse position.
-    let mousePos = getMousePos(canvas, event);
-
-    // Get the vertex.
-    vertex = webGLRenderer.getNearestVertex(mousePos);
-    if (!vertex) return;
-
-    console.log(vertex);
-
-    // Get the selected color.
-    let colorElement = (<HTMLInputElement>document.getElementById("color"));
-    let color = Color.hexToRGB(<string>colorElement.value);
-
-    // Get the object.
-    let object = webGLRenderer.getObject(vertex.objectId);
-
-    // Change object color.
-    object.setColor(color);
-
-    // Render the object.
-    webGLRenderer.render();
-  })
-}
-
-
-
-
-
-
-
