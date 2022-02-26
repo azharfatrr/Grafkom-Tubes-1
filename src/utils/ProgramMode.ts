@@ -7,7 +7,7 @@ import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
 import { getMousePos } from "./Mouse";
 
-export default class ModeListener {
+export default class ProgramMode {
   // ATTRIBUTES.
   private _webGLRenderer: WebGLRenderer;
 

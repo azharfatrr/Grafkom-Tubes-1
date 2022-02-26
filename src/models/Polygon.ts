@@ -24,7 +24,7 @@ class Polygon extends WebGLObject {
     this._constructPoint = this._nPoint;
 
     // Set the position.
-    this.position = position.map(p => Point.fromIPoint(p));
+    this._position = position.map(p => Point.fromIPoint(p));
   }
   
   /**

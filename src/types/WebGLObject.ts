@@ -10,7 +10,7 @@ abstract class WebGLObject {
 
   // The type model of the object.
   protected abstract _model: Model;
-  public get type(): Model {
+  public get model(): Model {
     return this._model;
   }
 
@@ -33,10 +33,16 @@ abstract class WebGLObject {
   }
 
   // The array of vertices position.
-  protected position: Point[];
+  protected _position: Point[];
+  public get position(): Point[] {
+    return this._position;
+  }
 
   // The color of object.
-  protected color: Color[];
+  protected _color: Color[];
+  public get color(): Color[] {
+    return this._color;
+  }
 
   // The vertex buffer.
   protected positionBuffer: WebGLBuffer;
@@ -100,7 +106,7 @@ abstract class WebGLObject {
     }
 
     // Set the position.
-    this.position = position.map(p => Point.fromIPoint(p));
+    this._position = position.map(p => Point.fromIPoint(p));
   }
 
   setPosition(...position: IPoint[]) {
@@ -110,7 +116,7 @@ abstract class WebGLObject {
     }
 
     // Set the position.
-    this.position = position.map(p => Point.fromIPoint(p));
+    this._position = position.map(p => Point.fromIPoint(p));
   }
 
   /**
@@ -119,11 +125,11 @@ abstract class WebGLObject {
    * @param color - The color of the object.
    */
   constructColor(...color: IColor[]) {
-    this.color = color.map(c => Color.fromIColor(c));
+    this._color = color.map(c => Color.fromIColor(c));
   }
 
   setColor(...color: IColor[]) {
-    this.color = color.map(c => Color.fromIColor(c));
+    this._color = color.map(c => Color.fromIColor(c));
   }
 
 
@@ -169,7 +175,7 @@ abstract class WebGLObject {
       throw new Error(`The index ${idx} is out of bounds.`);
     }
 
-    return this.position[idx];
+    return this._position[idx];
   }
 
   /**
@@ -183,7 +189,7 @@ abstract class WebGLObject {
       throw new Error(`The index ${idx} is out of bounds.`);
     }
 
-    this.position[idx] = Point.fromIPoint(point);
+    this._position[idx] = Point.fromIPoint(point);
   }
 
   /**
@@ -194,11 +200,11 @@ abstract class WebGLObject {
    */
   isInside(point: IPoint): boolean {
     // Get the maximum and minimum coordinate of the object.
-    const xMax = Math.max(...this.position.map(p => p.x));
-    const xMin = Math.min(...this.position.map(p => p.x));
+    const xMax = Math.max(...this._position.map(p => p.x));
+    const xMin = Math.min(...this._position.map(p => p.x));
 
-    const yMax = Math.max(...this.position.map(p => p.y));
-    const yMin = Math.min(...this.position.map(p => p.y));
+    const yMax = Math.max(...this._position.map(p => p.y));
+    const yMin = Math.min(...this._position.map(p => p.y));
 
     // Check if the point is between the minimum and maximum coordinate.
     return (point.x >= xMin && point.x <= xMax) && (point.y >= yMin && point.y <= yMax);
@@ -209,7 +215,7 @@ abstract class WebGLObject {
    * Validate that position already defined.
    */
   protected validatePosition() {
-    if (!this.position) {
+    if (!this._position) {
       throw new Error(`You must define ${this._nPoint} points in the object's position.`);
     }
   }
@@ -218,7 +224,7 @@ abstract class WebGLObject {
    * Validate that color already defined.
    */
   protected validateColor() {
-    if (!this.color) {
+    if (!this._color) {
       throw new Error("You must define object's color.");
     }
   }
@@ -235,7 +241,7 @@ abstract class WebGLObject {
 
     const newPosition = [];
     for (let i = 0; i < this._nPoint; i++) {
-      newPosition.push(...this.position[i % this.position.length].toTuple());
+      newPosition.push(...this._position[i % this._position.length].toTuple());
     }
     return new Float32Array(newPosition);
   }
@@ -251,7 +257,7 @@ abstract class WebGLObject {
 
     const newColor = [];
     for (let i = 0; i < this._nPoint; i++) {
-      newColor.push(...this.color[i % this.color.length].toTuple());
+      newColor.push(...this._color[i % this._color.length].toTuple());
     }
     return new Uint8Array(newColor);
   }

@@ -23,15 +23,15 @@ class Rectangle extends WebGLObject {
    */
   setVertex(idx: number, point: IPoint): void {
     // Calculate new position for each vertex.
-    this.position[idx] = Point.fromIPoint(point);
+    this._position[idx] = Point.fromIPoint(point);
     if (idx % 2 === 0) {
       // The even vertex is the top left or bottom right.
-      this.position[mod(idx - 1,4)].y = point.y;
-      this.position[mod(idx + 1,4)].x = point.x;
+      this._position[mod(idx - 1,4)].y = point.y;
+      this._position[mod(idx + 1,4)].x = point.x;
     } else {
       // The odd vertex is the top right or bottom left.
-      this.position[mod(idx - 1,4)].x = point.x;
-      this.position[mod(idx + 1,4)].y = point.y;
+      this._position[mod(idx - 1,4)].x = point.x;
+      this._position[mod(idx + 1,4)].y = point.y;
     }
 
     // Alternative method
@@ -67,7 +67,7 @@ class Rectangle extends WebGLObject {
     ];
 
     // Set the position.
-    this.position = allPosition.map(p => Point.fromIPoint(p));  
+    this._position = allPosition.map(p => Point.fromIPoint(p));  
   }
 
   /**

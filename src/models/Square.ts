@@ -23,7 +23,7 @@ class Square extends WebGLObject {
    */
   setVertex(idx: number, point: IPoint): void {
     // Get the anchor vertex.
-    const anchorVertex = this.position[(idx + 2) % 4];
+    const anchorVertex = this._position[(idx + 2) % 4];
     
     // Distance between the anchor and the corner.
     let dx = point.x - anchorVertex.x;
@@ -43,15 +43,15 @@ class Square extends WebGLObject {
     }
 
     // Calculate new position for each vertex.
-    this.position[idx] = Point.fromIPoint(newCorner);
+    this._position[idx] = Point.fromIPoint(newCorner);
     if (idx % 2 === 0) {
       // The even vertex is the top left or bottom right.
-      this.position[mod(idx - 1,4)].y = newCorner.y;
-      this.position[mod(idx + 1,4)].x = newCorner.x;
+      this._position[mod(idx - 1,4)].y = newCorner.y;
+      this._position[mod(idx + 1,4)].x = newCorner.x;
     } else {
       // The odd vertex is the top right or bottom left.
-      this.position[mod(idx - 1,4)].x = newCorner.x;
-      this.position[mod(idx + 1,4)].y = newCorner.y;
+      this._position[mod(idx - 1,4)].x = newCorner.x;
+      this._position[mod(idx + 1,4)].y = newCorner.y;
     }
   }
 
@@ -89,7 +89,7 @@ class Square extends WebGLObject {
     ];
 
     // Set the position.
-    this.position = allPosition.map(p => Point.fromIPoint(p));   
+    this._position = allPosition.map(p => Point.fromIPoint(p));   
   }
 
   /**

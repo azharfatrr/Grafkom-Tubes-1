@@ -1,6 +1,7 @@
-import ModeListener from "./utils/EventListener";
+import ProgramMode from "./utils/ProgramMode";
 import WebGLRenderer from "./types/WebGLRenderer";
 import WebGLUtils from "./utils/WebGLUtils";
+import { save } from "./utils/SaveLoad";
 
 // TODO: Create a function for select corner of an object.
 
@@ -21,7 +22,9 @@ async function main() {
   const webGLRenderer = new WebGLRenderer(gl, program);
 
   // Initialize the event listener.
-  const modeListener = new ModeListener(webGLRenderer, canvas);
+  const modeListener = new ProgramMode(webGLRenderer, canvas);
+
+  save(webGLRenderer);
 }
 
 
