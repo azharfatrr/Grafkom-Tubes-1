@@ -13,55 +13,71 @@
     <title>2D-CAD</title>
   </head>
   <body>
-    <h1>2D-CAD</h1>
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary" id="drawLineButton">
-        Draw Line
-      </button>
-      <button type="button" class="btn btn-primary" id="drawSquareButton">
-        Draw Square
-      </button>
-      <button type="button" class="btn btn-primary" id="drawRectangleButton">
-        Draw Rectangle
-      </button>
-      <button type="button" class="btn btn-primary" id="drawPolygonButton">
-        Draw Polygon
-      </button>
-      <!-- <button type="button" class="btn btn-primary">
+    <div classs="container">
+      <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <h1 style="text-align: center">2D-CAD</h1>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary" id="drawLineButton">
+              Draw Line
+            </button>
+            <button type="button" class="btn btn-primary" id="drawSquareButton">
+              Draw Square
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="drawRectangleButton"
+            >
+              Draw Rectangle
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="drawPolygonButton"
+            >
+              Draw Polygon
+            </button>
+            <!-- <button type="button" class="btn btn-primary">
         Move Vertex with Mouse
       </button> -->
-      <!-- <button type="button" class="btn btn-primary" id="resizeLineButton">
+            <!-- <button type="button" class="btn btn-primary" id="resizeLineButton">
         Resize Line Length
       </button>
       <button type="button" class="btn btn-primary" id="resizeSideButton">
         Resize Side Length (Square)
       </button> -->
-      <button type="button" class="btn btn-primary" id="changeColorButton">
-        Change Polygon Color
-      </button>
-      <a href="/" class="btn btn-primary">Refresh Page</a>
-      <!-- <button type="button" class="btn btn-primary" id="loadButton">
-        Load
-      </button> -->
-      <button type="button" class="btn btn-primary" id="saveButton">
-        Save
-      </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="changeColorButton"
+            >
+              Change Polygon Color
+            </button>
+            <a href="/" class="btn btn-primary">Refresh Page</a>
+            <button type="button" class="btn btn-primary" id="saveButton">
+              Save
+            </button>
+          </div>
+
+          <p>Pengguna dapat:</p>
+          <ol>
+            <li>Menggeser titik kontrol/simpul dengan mouse.</li>
+            <li>Mengubah panjang garis</li>
+            <li>Mengubah ukuran sisi persegi</li>
+            <li>Mengubah warna poligon</li>
+            <li>Menyimpan bentuk-bentuk yang telah digambar</li>
+            <li>Me-load bentuk-bentuk hasil penyimpanan</li>
+          </ol>
+
+          <div class="mb-3">
+            <input class="form-control" type="file" id="selectFileButton" />
+            <button id="loadButton" class="btn btn-primary">Load</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <p>Pengguna dapat:</p>
-    <ol>
-      <li>Menggeser titik kontrol/simpul dengan mouse.</li>
-      <li>Mengubah panjang garis</li>
-      <li>Mengubah ukuran sisi persegi</li>
-      <li>Mengubah warna poligon</li>
-      <li>Menyimpan bentuk-bentuk yang telah digambar</li>
-      <li>Me-load bentuk-bentuk hasil penyimpanan</li>
-    </ol>
-
-    <input type="file" id="selectFiles" value="Import" />
-    <button id="loadButton">Load</button>
-    <!-- <textarea id="result"> </textarea> -->
-    <!-- <p id="objectId">Daftar objek:</p> -->
     <canvas width="1000px" height="1000px" id="canvasContent"> </canvas>
     <script src="main.js" type="module"></script>
   </body>

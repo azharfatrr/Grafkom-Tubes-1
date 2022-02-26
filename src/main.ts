@@ -169,7 +169,7 @@ async function main() {
 
   // load function
   document.getElementById("loadButton").onclick = function () {
-    let files = document.getElementById("selectFiles").files;
+    let files = document.getElementById("selectFileButton").files;
     console.log(files);
     if (files.length <= 0) {
       return false;
