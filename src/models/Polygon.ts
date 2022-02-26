@@ -1,6 +1,6 @@
 import { Model } from "../configs/General";
 import Point, { IPoint } from "../types/Point";
-import WebGLObject from "../types/WebGLObject";
+import WebGLObject from "../utils/WebGL/WebGLObject";
 
 class Polygon extends WebGLObject {
   // CLASS PROPERTIES

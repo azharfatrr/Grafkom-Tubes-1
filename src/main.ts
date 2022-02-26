@@ -1,6 +1,6 @@
 import ApplicationMode from "./utils/ApplicationMode";
-import WebGLRenderer from "./types/WebGLRenderer";
-import WebGLUtils from "./utils/WebGLUtils";
+import WebGLRenderer from "./utils/WebGL/WebGLRenderer";
+import WebGLUtils from "./utils/WebGL/WebGLUtils";
 import SaveLoad from "./utils/SaveLoad";
 
 /**

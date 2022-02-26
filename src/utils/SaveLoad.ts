@@ -1,7 +1,7 @@
 import ModelFactory from "../models/ModelFactory";
 import SaveData from "../types/SaveData";
-import WebGLObject from "../types/WebGLObject";
-import WebGLRenderer from "../types/WebGLRenderer";
+import WebGLObject from "./WebGL/WebGLObject";
+import WebGLRenderer from "./WebGL/WebGLRenderer";
 
 export default class SaveLoad {
   // ATTRIBUTES.

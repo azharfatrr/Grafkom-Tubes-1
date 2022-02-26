@@ -1,7 +1,7 @@
-import { MIN_DISTANCE_BETWEEN_POINT } from "../configs/General";
-import WebGLUtils from "../utils/WebGLUtils";
-import Point, { IPoint } from "./Point";
-import { Vertex } from "./Vertex";
+import { MIN_DISTANCE_BETWEEN_POINT } from "../../configs/General";
+import WebGLUtils from "./WebGLUtils";
+import Point, { IPoint } from "../../types/Point";
+import { Vertex } from "../../types/Vertex";
 import WebGLObject from "./WebGLObject";
 
 /**

@@ -3,8 +3,8 @@ import ModelFactory from "../models/ModelFactory";
 import Color from "../types/Color";
 import { IPoint } from "../types/Point";
 import { Vertex } from "../types/Vertex";
-import WebGLObject from "../types/WebGLObject";
-import WebGLRenderer from "../types/WebGLRenderer";
+import WebGLObject from "./WebGL/WebGLObject";
+import WebGLRenderer from "./WebGL/WebGLRenderer";
 import { getMousePos } from "./Mouse";
 
 export default class ApplicationMode {

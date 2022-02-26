@@ -1,6 +1,6 @@
-import { Model } from "../configs/General";
-import Color, { IColor } from "./Color";
-import Point, { IPoint } from "./Point";
+import { Model } from "../../configs/General";
+import Color, { IColor } from "../../types/Color";
+import Point, { IPoint } from "../../types/Point";
 
 /**
  * An abstract class for WebGL objects.

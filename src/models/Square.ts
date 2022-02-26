@@ -1,6 +1,6 @@
 import { Model } from "../configs/General";
 import Point, { IPoint } from "../types/Point";
-import WebGLObject from "../types/WebGLObject";
+import WebGLObject from "../utils/WebGL/WebGLObject";
 import { mod } from "../utils/Math";
 
 class Square extends WebGLObject {

@@ -1,5 +1,5 @@
 import { Model } from "../configs/General";
-import WebGLObject from "../types/WebGLObject";
+import WebGLObject from "../utils/WebGL/WebGLObject";
 
 class Triangle extends WebGLObject {
   // CLASS PROPERTIES
