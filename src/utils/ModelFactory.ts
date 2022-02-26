@@ -1,13 +1,13 @@
 import { Model } from "../configs/General";
 import Color, { IColor } from "../types/Color";
 import Point, { IPoint } from "../types/Point";
-import WebGLObject from "../utils/WebGL/WebGLObject";
-import WebGLRenderer from "../utils/WebGL/WebGLRenderer";
-import Line from "./Line";
-import Polygon from "./Polygon";
-import Rectangle from "./Rectangle";
-import Square from "./Square";
-import Triangle from "./Triangle";
+import WebGLObject from "./WebGL/WebGLObject";
+import WebGLRenderer from "./WebGL/WebGLRenderer";
+import Line from "../models/Line";
+import Polygon from "../models/Polygon";
+import Rectangle from "../models/Rectangle";
+import Square from "../models/Square";
+import Triangle from "../models/Triangle";
 
 export default class ModelFactory {
   // ATTRIBUTES.

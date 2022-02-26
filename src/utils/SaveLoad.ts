@@ -1,4 +1,4 @@
-import ModelFactory from "../models/ModelFactory";
+import ModelFactory from "./ModelFactory";
 import SaveData from "../types/SaveData";
 import WebGLObject from "./WebGL/WebGLObject";
 import WebGLRenderer from "./WebGL/WebGLRenderer";

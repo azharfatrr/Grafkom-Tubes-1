@@ -1,5 +1,5 @@
 import { Mode, Model } from "../configs/General";
-import ModelFactory from "../models/ModelFactory";
+import ModelFactory from "./ModelFactory";
 import Color from "../types/Color";
 import { IPoint } from "../types/Point";
 import { Vertex } from "../types/Vertex";
