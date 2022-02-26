@@ -1,3 +1,4 @@
+import ModelFactory from "../models/ModelFactory";
 import SaveData from "../types/SaveData";
 import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
@@ -43,5 +44,46 @@ export function save(webGLRenderer: WebGLRenderer) {
 
 
 export function load(webGLRenderer: WebGLRenderer) {
-  
+  // Model Factory.
+  let factory = new ModelFactory(webGLRenderer);
+
+  const loadButton = document.getElementById("loadButton") as HTMLButtonElement;
+  loadButton.addEventListener("click", () => {
+    const input = document.getElementById("inputFile") as HTMLInputElement;    
+    const file = input.files[0];
+   
+    if (!file) {
+      return;
+    }
+
+    console.log("this is the file", file);
+
+    // Create a new reader.
+    const reader = new FileReader();
+
+    // Read the file.
+    reader.readAsText(file);
+
+    // Add event listener when the file is loaded.
+    reader.onload = (event) => {
+      // Get the data.
+      const data = JSON.parse(reader.result as string);
+
+      // Clear the objects.
+      webGLRenderer.clear();
+
+      // Create the objects.
+      data.forEach((saveData: SaveData) => {
+        const object = factory.createModel(saveData.model, saveData.color[0], ...saveData.position);
+        webGLRenderer.addObject(object);
+      });
+
+      // Render the objects.
+      webGLRenderer.render();
+
+      // Clear the input.
+      input.value = "";
+    };
+
+  })
 }

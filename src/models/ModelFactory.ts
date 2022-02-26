@@ -1,5 +1,5 @@
 import { Model } from "../configs/General";
-import Color from "../types/Color";
+import Color, { IColor } from "../types/Color";
 import Point, { IPoint } from "../types/Point";
 import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
@@ -24,7 +24,7 @@ export default class ModelFactory {
    * @param color - The color of the object.
    * @returns WebGLObjects
    */
-  createModel(model: Model, color: Color, ...position: IPoint[]): WebGLObject {
+  createModel(model: Model, color: IColor, ...position: IPoint[]): WebGLObject {
     // Check the length of the position.
     if (position.length === 0) {
       throw new Error("The position array is empty.");

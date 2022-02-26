@@ -87,6 +87,13 @@ class WebGLRenderer {
     }
   }
 
+  clear() {
+    // Clear the objects.
+    this._objects = [];
+    // Reset the count.
+    this.count = 0;
+  }
+
 
   /**
    * Get the nearest vertex of any object to the given point.
