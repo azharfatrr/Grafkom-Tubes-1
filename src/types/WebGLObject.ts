@@ -5,7 +5,7 @@ import Point, { IPoint } from "./Point";
 /**
  * An abstract class for WebGL objects.
  */
-abstract class WebGLObjects {
+abstract class WebGLObject {
   // CLASS PROPERTIES
 
   // The type model of the object.
@@ -166,6 +166,24 @@ abstract class WebGLObjects {
     this.position[idx] = Point.fromIPoint(point);
   }
 
+  /**
+   * Check if the point is inside the object. 
+   *
+   * @param point - The point to check.
+   * @returns true if the point is inside the object, false otherwise.
+   */
+  isInside(point: IPoint): boolean {
+    // Get the maximum and minimum coordinate of the object.
+    const xMax = Math.max(...this.position.map(p => p.x));
+    const xMin = Math.min(...this.position.map(p => p.x));
+
+    const yMax = Math.max(...this.position.map(p => p.y));
+    const yMin = Math.min(...this.position.map(p => p.y));
+
+    // Check if the point is between the minimum and maximum coordinate.
+    return (point.x >= xMin && point.x <= xMax) && (point.y >= yMin && point.y <= yMax);
+  }
+
 
   /**
    * Validate that position already defined.
@@ -279,4 +297,4 @@ abstract class WebGLObjects {
   }
 }
 
-export default WebGLObjects;
+export default WebGLObject;

@@ -2,7 +2,7 @@ import { MIN_DISTANCE_BETWEEN_POINT } from "../configs/General";
 import WebGLUtils from "../utils/WebGLUtils";
 import Point, { IPoint } from "./Point";
 import { Vertex } from "./Vertex";
-import WebGLObjects from "./WebGLObject";
+import WebGLObject from "./WebGLObject";
 
 /**
  * A Class for rendering WebGL objects.
@@ -11,7 +11,7 @@ class WebGLRenderer {
   // CLASS PROPERTIES
 
   // List of WebGLObjects.
-  protected objects: WebGLObjects[];
+  protected objects: WebGLObject[];
   // The number of objects.
   protected count: number;
 
@@ -46,7 +46,7 @@ class WebGLRenderer {
    * 
    * @param objects - The WebGLObject to add.
    */
-  addObject(...objects: WebGLObjects[]) {
+  addObject(...objects: WebGLObject[]) {
     // Add the object.
     this.objects.push(...objects);
     // Increment the count.
@@ -110,6 +110,26 @@ class WebGLRenderer {
             position: vertex
           };
         }
+      }
+    }
+  }
+
+  /**
+   * Get the object that inside the point position. 
+   *
+   * @param position - The position to check if the point is inside the object.
+   * @returns - WebGLObject if the point is inside the object, otherwise null.
+   */
+  getObjectInside(position: IPoint): WebGLObject {
+    // Iterate each object from last to first.
+    for (let i = this.objects.length - 1; i >= 0; i--) {
+      // Get the object.
+      const object = this.objects[i];
+     
+      // Check if the object is inside the position.
+      if (object.isInside(position)) {
+        // Return the object.
+        return object;
       }
     }
   }

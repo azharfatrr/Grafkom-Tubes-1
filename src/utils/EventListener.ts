@@ -2,7 +2,7 @@ import { Mode, Model } from "../configs/General";
 import ModelFactory from "../models/ModelFactory";
 import Color from "../types/Color";
 import { Vertex } from "../types/Vertex";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
 import { getMousePos } from "./Mouse";
 
@@ -60,7 +60,7 @@ export default class ModeListener {
    */
   private drawMode(): void {
     // The object.
-    let object: WebGLObjects;
+    let object: WebGLObject;
 
     // The state of drawing.
     let isDrawing = false;
@@ -193,9 +193,6 @@ export default class ModeListener {
    * Add event listener to paint mode.
    */
   private paintMode(): void {
-    // The object vertex.
-    let vertex: Vertex;
-
     // Add event listener when mouse is down.
     this._canvas.addEventListener("click", (event) => {
       // Check if the mode is move.
@@ -206,18 +203,13 @@ export default class ModeListener {
       // Get the mouse position.
       let mousePos = getMousePos(this._canvas, event);
 
-      // Get the vertex.
-      vertex = this._webGLRenderer.getNearestVertex(mousePos);
-      if (!vertex) return;
-
-      console.log(vertex);
+      // Get the object.
+      let object = this._webGLRenderer.getObjectInside(mousePos);
+      if (!object) return;
 
       // Get the selected color.
       let colorElement = (<HTMLInputElement>document.getElementById("color"));
       let color = Color.hexToRGB(<string>colorElement.value);
-
-      // Get the object.
-      let object = this._webGLRenderer.getObject(vertex.objectId);
 
       // Change object color.
       object.setColor(color);

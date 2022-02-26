@@ -1,7 +1,7 @@
 import { Model } from "../configs/General";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "../types/WebGLObject";
 
-class Line extends WebGLObjects {
+class Line extends WebGLObject {
   // CLASS PROPERTIES
 
   // The model of this object.

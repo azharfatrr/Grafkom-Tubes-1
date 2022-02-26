@@ -1,7 +1,7 @@
 import { Model } from "../configs/General";
 import Color from "../types/Color";
 import Point, { IPoint } from "../types/Point";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
 import Line from "./Line";
 import Rectangle from "./Rectangle";
@@ -23,8 +23,8 @@ export default class ModelFactory {
    * @param color - The color of the object.
    * @returns WebGLObjects
    */
-  createModel(model: Model, color: Color, mousePos: IPoint): WebGLObjects {
-    let object: WebGLObjects = new Line(Date.now(), this.renderer.gl, this.renderer.program);
+  createModel(model: Model, color: Color, mousePos: IPoint): WebGLObject {
+    let object: WebGLObject = new Line(Date.now(), this.renderer.gl, this.renderer.program);
     object.setPosition(mousePos, mousePos);
 
     // Create the models based on the model parameter.
