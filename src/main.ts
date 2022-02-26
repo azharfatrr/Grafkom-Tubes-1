@@ -113,6 +113,7 @@ async function main() {
     }
   });
 
+  // save button
   const saveButton = document.getElementById("saveButton");
   saveButton.addEventListener("click", () => {
     const data: WebGLObjects[] = webGLRenderer.getAllObjects();
@@ -129,9 +130,45 @@ async function main() {
     window.URL.revokeObjectURL(url);
   });
 
-  // const loadButton = document.getElementById("loadButton");
+  // TODO: improve draw function?
+  let id = 0; // id for counter
+  // draw line function
+  document.getElementById("drawLineButton").onclick = function () {
+    id += 1;
+    let line = new Line(id, gl, program);
+    line.setPosition({ x: 200, y: 700 }, { x: 800, y: 700 });
+    line.setColor({ r: 0, g: 0, b: 0 });
+    webGLRenderer.addObject(line);
+    webGLRenderer.render();
+  };
 
-  document.getElementById("load").onclick = function () {
+  // draw square function
+  document.getElementById("drawSquareButton").onclick = function () {
+    id += 1;
+    let square = new Square(id, gl, program);
+    square.setPosition({ x: 500, y: 500 }, { x: 700, y: 350 });
+    square.setColor(
+      { r: 0, g: 255, b: 0 },
+      { r: 0, g: 255, b: 0 },
+      { r: 0, g: 0, b: 255 },
+      { r: 0, g: 0, b: 255 }
+    );
+    webGLRenderer.addObject(square);
+    webGLRenderer.render();
+  };
+
+  // draw rectangle function
+  document.getElementById("drawRectangleButton").onclick = function () {
+    id += 1;
+    let rectangle = new Rectangle(id, gl, program);
+    rectangle.setPosition({ x: 200, y: 800 }, { x: 800, y: 300 });
+    rectangle.setColor({ r: 0, g: 0, b: 255 });
+    webGLRenderer.addObject(rectangle);
+    webGLRenderer.render();
+  };
+
+  // load function
+  document.getElementById("loadButton").onclick = function () {
     let files = document.getElementById("selectFiles").files;
     console.log(files);
     if (files.length <= 0) {
