@@ -1,9 +1,13 @@
+import { Model } from "../configs/General";
 import Point, { IPoint } from "../types/Point";
 import WebGLObjects from "../types/WebGLObject";
 import { mod } from "../utils/Math";
 
 class Rectangle extends WebGLObjects {
   // CLASS PROPERTIES
+
+  // The model of this object.
+  protected _model = Model.RECTANGLE;
 
   // Number of vertices.
   protected _nPoint = 4;
