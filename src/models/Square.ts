@@ -11,6 +11,7 @@ class Square extends WebGLObject {
   
   // Number of vertices.
   protected _nPoint = 4;
+  protected _constructPoint = 2;
 
   // CLASS METHODS
 
@@ -64,7 +65,7 @@ class Square extends WebGLObject {
    */
   setPosition(...position: IPoint[]): void {
     // Check if the number of vertices is equal to the number of position in parameter.
-    if (position.length !== 2) {
+    if (position.length !== this._constructPoint) {
       throw new Error(`The number of position in parameter must be equal to 2.`);
     }
 

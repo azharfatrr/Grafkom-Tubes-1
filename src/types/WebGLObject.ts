@@ -20,6 +20,12 @@ abstract class WebGLObject {
     return this._nPoint;
   }
 
+  // The number of point needed in setPosition.
+  protected abstract _constructPoint: number;
+  public get constructPoint(): number {
+    return this._constructPoint;
+  }
+
   // The id of object.
   protected _id: number;
   public get id(): number {
@@ -189,7 +195,7 @@ abstract class WebGLObject {
    * Validate that position already defined.
    */
   protected validatePosition() {
-    if (!this.position || this.position.length !== this._nPoint) {
+    if (!this.position) {
       throw new Error(`You must define ${this._nPoint} points in the object's position.`);
     }
   }
@@ -215,7 +221,7 @@ abstract class WebGLObject {
 
     const newPosition = [];
     for (let i = 0; i < this._nPoint; i++) {
-      newPosition.push(...this.position[i].toTuple());
+      newPosition.push(...this.position[i % this.position.length].toTuple());
     }
     return new Float32Array(newPosition);
   }

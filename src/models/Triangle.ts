@@ -9,6 +9,7 @@ class Triangle extends WebGLObject {
 
   // Number of vertices.
   protected _nPoint = 3;
+  protected _constructPoint = 3;
 
   // CLASS METHODS
   

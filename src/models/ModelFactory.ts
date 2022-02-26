@@ -23,35 +23,46 @@ export default class ModelFactory {
    * @param color - The color of the object.
    * @returns WebGLObjects
    */
-  createModel(model: Model, color: Color, mousePos: IPoint): WebGLObject {
-    let object: WebGLObject = new Line(Date.now(), this.renderer.gl, this.renderer.program);
-    object.setPosition(mousePos, mousePos);
+  createModel(model: Model, color: Color, ...position: IPoint[]): WebGLObject {
+    // Check the length of the position.
+    if (position.length === 0) {
+      throw new Error("The position array is empty.");
+    }
 
+    // Initialize the object.
+    let object: WebGLObject = new Line(Date.now(), this.renderer.gl, this.renderer.program);
+   
     // Create the models based on the model parameter.
     switch (model) {
       case Model.LINE:
         object = new Line(Date.now(), this.renderer.gl, this.renderer.program);
-        object.setPosition(mousePos, mousePos);
         break;
       case Model.TRIANGLE:
         object = new Triangle(Date.now(), this.renderer.gl, this.renderer.program);
-        object.setPosition(mousePos, mousePos, mousePos);
         break;
       case Model.SQUARE:
         object = new Square(Date.now(), this.renderer.gl, this.renderer.program);
-        object.setPosition(mousePos, mousePos);
         break;
       case Model.RECTANGLE:
         object = new Rectangle(Date.now(), this.renderer.gl, this.renderer.program);
-        object.setPosition(mousePos, mousePos);
         break;
       case Model.POLYGON:
         break;
       default:
         break;
     }
-        
+
+    // The object position.
+    let modelPosition: IPoint[] = [];
+    for (let i = 0; i < object.constructPoint; i++) {
+      modelPosition.push(position[i % position.length]);
+    }
+
+    // Set the object position and color.
+    object.setPosition(...modelPosition);   
     object.setColor(color);
+
+    // Return the object.
     return object;
   }
 }

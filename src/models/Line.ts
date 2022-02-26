@@ -9,6 +9,7 @@ class Line extends WebGLObject {
 
   // Number of vertices.
   protected _nPoint = 2;
+  protected _constructPoint = 2;
 
   // CLASS METHODS
   
