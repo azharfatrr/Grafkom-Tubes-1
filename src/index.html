@@ -7,7 +7,36 @@
     <title>2D-CAD</title>
 </head>
 <body>
-    <canvas width="1000px" height="1000px" id="canvasContent"></canvas>
+    <div class="main-container">
+        <div class="menu-tools">
+            <h1>2D-CAD</h1>
+            <p>Select Mode</p>
+            <select name="mode" id="mode">
+                <option value="DRAW">Draw</option>
+                <option value="MOVE">Move</option>
+                <option value="PAINT">Paint</option>
+            </select>
+            <p>Select Shape</p>
+            <select name="shape" id="shape">
+                <option value="LINE">Line</option>
+                <option value="SQUARE">Square</option>
+                <option value="RECTANGLE">Rectangle</option>
+                <option value="POLYGON">Polygon</option>
+            </select>
+            <p>Select Color</p>
+            <input type="color" value="#000000" id="color">
+
+        </div>
+        
+        <canvas width="700px" height="700px" id="canvasContent"></canvas>
+
+        <div class="menu-help">
+            <h1>HELP</h1>
+        </div>
+    </div>
+    
+
+
     <script src="main.js" type="module"></script>
 </body>
 </html>

@@ -16,7 +16,16 @@ class WebGLRenderer {
   protected count: number;
 
   // The WebGL context.
-  protected gl: WebGLRenderingContext;
+  protected _gl: WebGLRenderingContext;
+  public get gl() {
+    return this._gl;
+  }
+
+  // The Shader Program.
+  protected _program: WebGLProgram;
+  public get program() {
+    return this._program;
+  }
 
   // CLASS METHODS
   
@@ -25,12 +34,12 @@ class WebGLRenderer {
    *
    * @param gl - The WebGL context.
    */
-  constructor(gl: WebGLRenderingContext) {
+  constructor(gl: WebGLRenderingContext, program: WebGLProgram) {
     this.objects = [];
     this.count = 0;
-    this.gl = gl;
+    this._gl = gl;
+    this._program = program;
   }
-
 
   /**
    * Add a WebGLObject to the renderer.
@@ -111,14 +120,14 @@ class WebGLRenderer {
    */
   render() {
     // Resize the canvas to fit the window.
-    WebGLUtils.resizeCanvasToDisplaySize(this.gl.canvas);
+    WebGLUtils.resizeCanvasToDisplaySize(this._gl.canvas);
 
     // Tell WebGL how to convert from clip space to pixels
-    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+    this._gl.viewport(0, 0, this._gl.canvas.width, this._gl.canvas.height);
 
     // Clear the canvas
-    this.gl.clearColor(0, 0, 0, 0);
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    this._gl.clearColor(0, 0, 0, 0);
+    this._gl.clear(this._gl.COLOR_BUFFER_BIT);
 
     // Render each object.
     this.objects.forEach(object => {

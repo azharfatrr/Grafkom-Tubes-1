@@ -9,3 +9,10 @@ export enum Model {
   RECTANGLE = "RECTANGLE",
   POLYGON = "POLYGON",
 }
+
+// Modes of application.
+export enum Mode {
+  Draw = "DRAW",
+  Move = "MOVE",
+  Paint = "PAINT",
+}
