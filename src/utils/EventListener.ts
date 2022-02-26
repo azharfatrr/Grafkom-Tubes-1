@@ -1,6 +1,7 @@
 import { Mode, Model } from "../configs/General";
 import ModelFactory from "../models/ModelFactory";
 import Color from "../types/Color";
+import { IPoint } from "../types/Point";
 import { Vertex } from "../types/Vertex";
 import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
@@ -10,7 +11,11 @@ export default class ModeListener {
   // ATTRIBUTES.
   private _webGLRenderer: WebGLRenderer;
 
+  // The mode of the application.
   private _mode: Mode;
+
+  // The list of polygon vertices.
+  private _vertices: IPoint[] = [];
 
   private _canvas: HTMLCanvasElement;
 
@@ -40,10 +45,17 @@ export default class ModeListener {
     // Initialize the mode listener.
     this._mode = <Mode>modeElement.value;
 
-    // Add event listener when the mode is changed.
+    // Add event listener for change of mode
     modeElement.addEventListener("change", (event) => {
+      // Reset the vertices.
+      this._vertices = [];
+
+      // Change the mode.
       this._mode = <Mode>(<HTMLInputElement>event.target).value;
     });
+
+    // Add event listener for change of shape.
+    this.shapeListener();
 
     // Add event listener to draw mode.
     this.drawMode();
@@ -83,8 +95,31 @@ export default class ModeListener {
       let colorElement = (<HTMLInputElement>document.getElementById("color"));
       let color = Color.hexToRGB(<string>colorElement.value);
 
+      // Get the number of vertices.
+      let numVertices = parseInt((<HTMLInputElement>document.getElementById("vertex")).value);
+
       // Get the mouse position.
       let mousePos = getMousePos(this._canvas, event);
+
+      // Check if the shape is polygon.
+      if (model === Model.POLYGON) {
+        // Add the mousePos to the list of vertices.
+        this._vertices.push(mousePos);
+
+        // Check if the number of vertices is already reached.
+        if (this._vertices.length === numVertices) {
+          // Create the object.
+          object = factory.createModel(model, color, ...this._vertices);
+
+          // Add the object to the renderer.
+          this._webGLRenderer.addObject(object);
+          this._webGLRenderer.render();
+
+          // Clear the list of vertices.
+          this._vertices = [];
+        }
+        return;
+      }
 
       // Create the object.
       object = factory.createModel(model, color, mousePos);
@@ -217,5 +252,41 @@ export default class ModeListener {
       // Render the object.
       this._webGLRenderer.render();
     })
+  }
+
+
+  /**
+   * Add event listener to change of shape.
+   */
+  private shapeListener(): void {
+    // Get the selected model and value.
+    let shapeElement = (<HTMLInputElement>document.getElementById("shape"));
+    let model = <Model>shapeElement.value;
+
+    if (model === Model.POLYGON) {
+      // Hide the vertex input and label.
+      (<HTMLInputElement>document.getElementById("vertex-label")).style.display = "block";
+      (<HTMLInputElement>document.getElementById("vertex")).style.display = "block";
+    }
+    
+    // Add event listener for change of shape.
+    shapeElement.addEventListener("change", (event) => {
+      // Reset the vertices.
+      this._vertices = [];
+
+      // Get the shape.
+      let model = <Model>(<HTMLInputElement>event.target).value;
+
+      // Check if shape is non-polygon.
+      if (model !== Model.POLYGON) {
+        // Hide the vertex input and label.
+        (<HTMLInputElement>document.getElementById("vertex-label")).style.display = "none";
+        (<HTMLInputElement>document.getElementById("vertex")).style.display = "none";
+      } else {
+        // Show the vertex input.
+        (<HTMLInputElement>document.getElementById("vertex-label")).style.display = "block";
+        (<HTMLInputElement>document.getElementById("vertex")).style.display = "block";
+      }
+    });
   }
 }

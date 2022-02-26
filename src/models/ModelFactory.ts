@@ -4,6 +4,7 @@ import Point, { IPoint } from "../types/Point";
 import WebGLObject from "../types/WebGLObject";
 import WebGLRenderer from "../types/WebGLRenderer";
 import Line from "./Line";
+import Polygon from "./Polygon";
 import Rectangle from "./Rectangle";
 import Square from "./Square";
 import Triangle from "./Triangle";
@@ -29,6 +30,8 @@ export default class ModelFactory {
       throw new Error("The position array is empty.");
     }
 
+    console.log(position);
+
     // Initialize the object.
     let object: WebGLObject = new Line(Date.now(), this.renderer.gl, this.renderer.program);
    
@@ -47,19 +50,28 @@ export default class ModelFactory {
         object = new Rectangle(Date.now(), this.renderer.gl, this.renderer.program);
         break;
       case Model.POLYGON:
-        break;
+        object = new Polygon(Date.now(), this.renderer.gl, this.renderer.program);  
+        break
       default:
         break;
     }
 
-    // The object position.
-    let modelPosition: IPoint[] = [];
-    for (let i = 0; i < object.constructPoint; i++) {
-      modelPosition.push(position[i % position.length]);
+    // Set the object position for non-polygon objects.
+    if (model != Model.POLYGON) {
+      // The object position.
+      let modelPosition: IPoint[] = [];
+      for (let i = 0; i < object.constructPoint; i++) {
+        modelPosition.push(position[i % position.length]);
+      }
+  
+      // Set the object position.
+      object.setPosition(...modelPosition);   
+    } else {
+      // Set the object position for polygon objects.
+      object.setPosition(...position); 
     }
 
-    // Set the object position and color.
-    object.setPosition(...modelPosition);   
+    // Set the object color.
     object.setColor(color);
 
     // Return the object.
