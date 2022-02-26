@@ -247,7 +247,7 @@ export default class ModeListener {
       let color = Color.hexToRGB(<string>colorElement.value);
 
       // Change object color.
-      object.setColor(color);
+      object.constructColor(color);
 
       // Render the object.
       this._webGLRenderer.render();

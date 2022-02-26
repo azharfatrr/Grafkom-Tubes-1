@@ -93,6 +93,16 @@ abstract class WebGLObject {
    *
    * @param position - The vertices point position.
    */
+  constructPosition(...position: IPoint[]) {
+    // Check if the number of vertices is equal to the number of position in parameter.
+    if (position.length !== this._constructPoint) {
+      throw new Error(`The number of position in parameter must be equal to ${this._constructPoint}.`);
+    }
+
+    // Set the position.
+    this.position = position.map(p => Point.fromIPoint(p));
+  }
+
   setPosition(...position: IPoint[]) {
     // Check if the number of vertices is equal to the number of position in parameter.
     if (position.length !== this._nPoint) {
@@ -108,6 +118,10 @@ abstract class WebGLObject {
    *
    * @param color - The color of the object.
    */
+  constructColor(...color: IColor[]) {
+    this.color = color.map(c => Color.fromIColor(c));
+  }
+
   setColor(...color: IColor[]) {
     this.color = color.map(c => Color.fromIColor(c));
   }

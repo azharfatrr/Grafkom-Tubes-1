@@ -48,7 +48,7 @@ class Rectangle extends WebGLObject {
    *
    * @param position 
    */
-  setPosition(...position: IPoint[]): void {
+  constructPosition(...position: IPoint[]): void {
     // Check if the number of vertices is equal to the number of position in parameter.
     if (position.length !== this._constructPoint) {
       throw new Error(`The number of position in parameter must be equal to 2.`);

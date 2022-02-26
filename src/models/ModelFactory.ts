@@ -30,8 +30,6 @@ export default class ModelFactory {
       throw new Error("The position array is empty.");
     }
 
-    console.log(position);
-
     // Initialize the object.
     let object: WebGLObject = new Line(Date.now(), this.renderer.gl, this.renderer.program);
    
@@ -60,7 +58,7 @@ export default class ModelFactory {
     if (model != Model.POLYGON) {
       // The object position.
       let modelPosition: IPoint[] = [];
-      for (let i = 0; i < object.constructPoint; i++) {
+      for (let i = 0; i < object.nPoint; i++) {
         modelPosition.push(position[i % position.length]);
       }
   
@@ -72,7 +70,7 @@ export default class ModelFactory {
     }
 
     // Set the object color.
-    object.setColor(color);
+    object.constructColor(color);
 
     // Return the object.
     return object;
