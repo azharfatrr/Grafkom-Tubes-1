@@ -12,14 +12,14 @@ class Line extends WebGLObject {
   protected _constructPoint = 2;
 
   // CLASS METHODS
-  
+
   /**
    * Draws the triangle object.
    */
   draw() {
     // Init drawing.
     this.initDraw();
-        
+
     // Draw the geometry.
     var primitiveType = this.gl.LINES;
     var offset = 0;
