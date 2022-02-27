@@ -27,7 +27,7 @@ async function main() {
   const modeListener = new ApplicationMode(webGLRenderer, canvas);
 
   // The application's save/load listener.
-  const saveLoad = new SaveLoad(webGLRenderer);
+  // TODO: CREATE SAVE FUNCTIONALITY.
 }
 
 
