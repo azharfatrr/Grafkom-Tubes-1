@@ -13,12 +13,14 @@ async function main() {
 
   // Check if WebGL is supported.
   if (!gl) {
-    window.alert("Unable to initialize WebGL. Your browser or machine may not support it.");
+    window.alert(
+      "Unable to initialize WebGL. Your browser or machine may not support it."
+    );
     return;
   }
-  
+
   // Use utils to compile the shaders and link into a program
-  const program = await WebGLUtils.createDefaultProgram(gl)
+  const program = await WebGLUtils.createDefaultProgram(gl);
 
   // Call the render object.
   const webGLRenderer = new WebGLRenderer(gl, program);
@@ -26,12 +28,8 @@ async function main() {
   // The application's event listener.
   const modeListener = new ApplicationMode(webGLRenderer, canvas);
 
-  // The application's save/load listener.
-  // TODO: CREATE SAVE FUNCTIONALITY.
+  // The application's save, load, clear listener.
+  const saveLoadClearListener = new SaveLoad(webGLRenderer);
 }
 
-
 main();
-
-
-

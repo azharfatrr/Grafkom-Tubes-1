@@ -15,7 +15,7 @@ class WebGLRenderer {
   public get objects() {
     return this._objects;
   }
-  
+
   // The number of objects.
   protected count: number;
 
@@ -32,9 +32,9 @@ class WebGLRenderer {
   }
 
   // CLASS METHODS
-  
+
   /**
-   * Construct the renderer. 
+   * Construct the renderer.
    *
    * @param gl - The WebGL context.
    */
@@ -47,7 +47,7 @@ class WebGLRenderer {
 
   /**
    * Add a WebGLObject to the renderer.
-   * 
+   *
    * @param objects - The WebGLObject to add.
    */
   addObject(...objects: WebGLObject[]) {
@@ -58,14 +58,14 @@ class WebGLRenderer {
   }
 
   /**
-   * Get a WebGLObject from the renderer. 
+   * Get a WebGLObject from the renderer.
    *
    * @param id - The id of the WebGLObject.
    * @returns The WebGLObject.
    */
   getObject(id: number) {
     // Find the object index in the list.
-    const index = this._objects.findIndex(object => object.id === id);
+    const index = this._objects.findIndex((object) => object.id === id);
     // Return the object.
     if (index > -1) {
       return this._objects[index];
@@ -73,13 +73,13 @@ class WebGLRenderer {
   }
 
   /**
-   * Remove a WebGLObject from the renderer. 
+   * Remove a WebGLObject from the renderer.
    *
    * @param id - The id of the WebGLObject to remove.
    */
   removeObject(id: number) {
     // Find the object index in the list.
-    const index = this._objects.findIndex(object => object.id === id);
+    const index = this._objects.findIndex((object) => object.id === id);
     // Remove the object.
     if (index > -1) {
       this._objects.splice(index, 1);
@@ -94,10 +94,9 @@ class WebGLRenderer {
     this.count = 0;
   }
 
-
   /**
    * Get the nearest vertex of any object to the given point.
-   * 
+   *
    * @param position - The position to check nearby vertex.
    * @returns The nearest vertex with object information.
    */
@@ -106,7 +105,7 @@ class WebGLRenderer {
     for (let i = this._objects.length - 1; i >= 0; i--) {
       // Get the object.
       const object = this._objects[i];
-     
+
       // Iterate each vertex.
       for (let j = 0; j < object.nPoint; j++) {
         // Get the vertex.
@@ -118,7 +117,7 @@ class WebGLRenderer {
           return {
             objectId: object.id,
             vertexIdx: j,
-            position: vertex
+            position: vertex,
           };
         }
       }
@@ -126,7 +125,7 @@ class WebGLRenderer {
   }
 
   /**
-   * Get the object that inside the point position. 
+   * Get the object that inside the point position.
    *
    * @param position - The position to check if the point is inside the object.
    * @returns - WebGLObject if the point is inside the object, otherwise null.
@@ -136,7 +135,7 @@ class WebGLRenderer {
     for (let i = this._objects.length - 1; i >= 0; i--) {
       // Get the object.
       const object = this._objects[i];
-     
+
       // Check if the object is inside the position.
       if (object.isInside(position)) {
         // Return the object.
@@ -144,7 +143,6 @@ class WebGLRenderer {
       }
     }
   }
-
 
   /**
    * Render the all objects.
@@ -161,12 +159,11 @@ class WebGLRenderer {
     this._gl.clear(this._gl.COLOR_BUFFER_BIT);
 
     // Render each object.
-    this._objects.forEach(object => {
+    this._objects.forEach((object) => {
       // Draw the object.
       object.draw();
-    })
+    });
   }
-
 }
 
 export default WebGLRenderer;
