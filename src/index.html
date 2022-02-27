@@ -1,63 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/main.css" />
     <title>2D-CAD</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="main-container">
-        <div class="menu-tools">
-            <h1>2D-CAD</h1>
+      <div class="menu-tools">
+        <h1>2D-CAD</h1>
 
-            <p>Select Mode</p>
-            <select name="mode" id="mode">
-                <option value="DRAW">Draw</option>
-                <option value="MOVE">Move</option>
-                <option value="PAINT">Paint</option>
-            </select>
+        <p>Select Mode</p>
+        <select name="mode" id="mode">
+          <option value="DRAW">Draw</option>
+          <option value="MOVE">Move</option>
+          <option value="PAINT">Paint</option>
+        </select>
 
-            <p>Select Shape</p>
-            <select name="shape" id="shape">
-                <option value="LINE">Line</option>
-                <option value="SQUARE">Square</option>
-                <option value="RECTANGLE">Rectangle</option>
-                <option value="POLYGON">Polygon</option>
-            </select>
+        <p>Select Shape</p>
+        <select name="shape" id="shape">
+          <option value="LINE">Line</option>
+          <option value="SQUARE">Square</option>
+          <option value="RECTANGLE">Rectangle</option>
+          <option value="POLYGON">Polygon</option>
+        </select>
 
-            <p id="vertex-label" style="display: none;">Number of Vertex</p>
-            <input type="number" id="vertex" min="3" value="3" style="display: none;">
+        <p id="vertex-label" style="display: none">Number of Vertex</p>
+        <input
+          type="number"
+          id="vertex"
+          min="3"
+          value="3"
+          style="display: none"
+        />
 
-            
-            <p>Select Color</p>
-            <input type="color" value="#0000FF" id="color">
-            
-            <div class="saveContainer">
-                <p>Save & Load</p>
-                <div>
-                    <input type="button" value="Save" id="saveButton">
-                    <input type="button" value="Load" id="loadButton">
-                </div>
-                <input type="button" value="Clear" id="clearButton">
-                <input type="file" id="inputFile" accept=".json">
-            </div>
+        <p>Select Color</p>
+        <input type="color" value="#0000FF" id="color" />
 
-            <div class="fileContainer">
-                
-            </div>
-
+        <div class="saveContainer">
+          <p>Save & Load</p>
+          <div class="saveContainerButton">
+            <input type="button" value="Save" id="saveButton" />
+            <input type="button" value="Load" id="loadButton" />
+            <input type="button" value="Clear" id="clearButton" />
+          </div>
+          <br />
+          <input type="file" id="inputFile" accept=".json" />
         </div>
-        
-        <canvas width="700px" height="700px" id="canvas-content"></canvas>
 
-        <div class="menu-help">
-            <h1>HELP</h1>
-        </div>
+        <div class="fileContainer"></div>
+      </div>
+
+      <canvas width="700px" height="700px" id="canvas-content"></canvas>
+
+      <div class="menu-help">
+        <h1>HELP</h1>
+      </div>
     </div>
-    
-
 
     <script src="main.js" type="module"></script>
-</body>
+  </body>
 </html>
