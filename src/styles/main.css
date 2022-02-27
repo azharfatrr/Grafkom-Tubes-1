@@ -1,12 +1,83 @@
 /* make http and body fill up all area  */
-html, body {
-  height: 100%;
+html {
   margin: 0;
+  padding: 0;
+  /* background-color: #616161; */
 }
+
+body {
+  margin: 0 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 /* make the canvas fill its container */
 canvas {
-  /* width: 1000px;
-  height: 1000px; */
+  background-color: white;
   display: block;
-  /* margin-left: 200px; */
+  border: 3px solid #000000;
+}
+
+h1 {
+  margin: 15px 0;
+}
+
+p {
+  margin: 5px 0;
+}
+
+select {
+  margin-bottom: 10px;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 10px;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+}
+
+#canvas-content {
+  margin: 30px auto;
+}
+
+.menu-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px;
+}
+
+.saveContainer {
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.saveContainer #inputFile {
+  margin: 5px auto;
+}
+
+.menu-help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px;
+}
+
+.saveContainerButton input,
+select {
+  background-color: #555555;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
 }

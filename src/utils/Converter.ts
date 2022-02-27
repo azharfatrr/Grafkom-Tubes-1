@@ -2,51 +2,37 @@ import Rectangle from "../models/Rectangle";
 import Square from "../models/Square";
 import Triangle from "../models/Triangle";
 import Line from "../models/Line";
-// import { Vertex } from "../types/Vertex";
-// import WebGLRenderer from "../types/WebGLRenderer";
-// import { getMousePos } from "../utils/General";
-// import WebGLUtils from "../utils/WebGLUtils";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "./WebGL/WebGLObject";
+import Polygon from "../models/Polygon";
 
 export function convertJsonToObject(
   jsonData,
   gl: WebGLRenderingContext,
   program: WebGLProgram
 ) {
-  let object: WebGLObjects;
-  let position = jsonData.position; // array of {x, y}
-  // console.log("Position", position);
+  let object: WebGLObject;
+  let id = jsonData._id;
+  let position = jsonData._position; // array of {x, y}
   switch (jsonData._model) {
     case "LINE":
-      object = new Line(jsonData._id, gl, program);
-      position = jsonData.position;
+      object = new Line(id, gl, program);
       break;
     case "TRIANGLE":
-      object = new Triangle(jsonData._id, gl, program);
-      position = jsonData.position;
+      object = new Triangle(id, gl, program);
       break;
-    // For rectangle and square, the number of position is 2
     case "RECTANGLE":
-      object = new Rectangle(jsonData._id, gl, program);
-      position = jsonData.position
-        .slice(0, 1)
-        .concat(jsonData.position.slice(2, 3));
+      object = new Rectangle(id, gl, program);
       break;
     case "SQUARE":
-      object = new Square(jsonData._id, gl, program);
-      position = jsonData.position
-        .slice(0, 1)
-        .concat(jsonData.position.slice(2, 3));
+      object = new Square(id, gl, program);
       break;
     case "POLYGON":
-      // TODO polygon
-      // webGLObject = new Polygon(jsonData.id,gl,program);
-      // position = jsonData.position;
+      object = new Polygon(id, gl, program);
       break;
     default:
       break;
   }
   object.setPosition(...position);
-  object.setColor(...jsonData.color);
+  object.setColor(...jsonData._color);
   return object;
 }

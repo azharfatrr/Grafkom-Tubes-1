@@ -1,9 +1,9 @@
 import { Model } from "../configs/General";
 import Point, { IPoint } from "../types/Point";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "../utils/WebGL/WebGLObject";
 import { mod } from "../utils/Math";
 
-class Rectangle extends WebGLObjects {
+class Rectangle extends WebGLObject {
   // CLASS PROPERTIES
 
   // The model of this object.
@@ -11,6 +11,7 @@ class Rectangle extends WebGLObjects {
 
   // Number of vertices.
   protected _nPoint = 4;
+  protected _constructPoint = 2;
 
   // CLASS METHODS
 
@@ -22,15 +23,15 @@ class Rectangle extends WebGLObjects {
    */
   setVertex(idx: number, point: IPoint): void {
     // Calculate new position for each vertex.
-    this.position[idx] = Point.fromIPoint(point);
+    this._position[idx] = Point.fromIPoint(point);
     if (idx % 2 === 0) {
       // The even vertex is the top left or bottom right.
-      this.position[mod(idx - 1,4)].y = point.y;
-      this.position[mod(idx + 1,4)].x = point.x;
+      this._position[mod(idx - 1,4)].y = point.y;
+      this._position[mod(idx + 1,4)].x = point.x;
     } else {
       // The odd vertex is the top right or bottom left.
-      this.position[mod(idx - 1,4)].x = point.x;
-      this.position[mod(idx + 1,4)].y = point.y;
+      this._position[mod(idx - 1,4)].x = point.x;
+      this._position[mod(idx + 1,4)].y = point.y;
     }
 
     // Alternative method
@@ -47,9 +48,9 @@ class Rectangle extends WebGLObjects {
    *
    * @param position 
    */
-  setPosition(...position: IPoint[]): void {
+  constructPosition(...position: IPoint[]): void {
     // Check if the number of vertices is equal to the number of position in parameter.
-    if (position.length !== 2) {
+    if (position.length !== this._constructPoint) {
       throw new Error(`The number of position in parameter must be equal to 2.`);
     }
 
@@ -66,7 +67,7 @@ class Rectangle extends WebGLObjects {
     ];
 
     // Set the position.
-    this.position = allPosition.map(p => Point.fromIPoint(p));  
+    this._position = allPosition.map(p => Point.fromIPoint(p));  
   }
 
   /**

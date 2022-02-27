@@ -1,18 +1,20 @@
 import { Model } from "../configs/General";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "../utils/WebGL/WebGLObject";
 
-class Line extends WebGLObjects {
+class Line extends WebGLObject {
   // CLASS PROPERTIES
 
   // The model of this object.
   protected _model = Model.LINE;
+
   // Number of vertices.
   protected _nPoint = 2;
+  protected _constructPoint = 2;
 
   // CLASS METHODS
 
   /**
-   * Draws the line object.
+   * Draws the triangle object.
    */
   draw() {
     // Init drawing.
@@ -21,7 +23,7 @@ class Line extends WebGLObjects {
     // Draw the geometry.
     var primitiveType = this.gl.LINES;
     var offset = 0;
-    var count = this.nPoint;
+    var count = this._nPoint;
     this.gl.drawArrays(primitiveType, offset, count);
   }
 }

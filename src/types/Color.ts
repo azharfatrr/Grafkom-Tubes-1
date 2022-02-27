@@ -89,6 +89,19 @@ export class Color implements IColor {
   static fromIColor(obj: IColor): Color {
     return new Color(obj.r, obj.g, obj.b, obj.a);
   }
+
+  /**
+   * Convert the Hex color to Color object.
+   * 
+   * @param hex - The hexadecimal color value.
+   * @returns a new Color object.
+   */
+  static hexToRGB(hex: string): Color {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+    return new Color(r, g, b);
+  }
 }
 
 export default Color;

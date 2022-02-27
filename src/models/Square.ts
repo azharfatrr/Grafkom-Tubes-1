@@ -1,9 +1,9 @@
 import { Model } from "../configs/General";
 import Point, { IPoint } from "../types/Point";
-import WebGLObjects from "../types/WebGLObject";
+import WebGLObject from "../utils/WebGL/WebGLObject";
 import { mod } from "../utils/Math";
 
-class Square extends WebGLObjects {
+class Square extends WebGLObject {
   // CLASS PROPERTIES
 
   // The model of this object.
@@ -11,6 +11,7 @@ class Square extends WebGLObjects {
   
   // Number of vertices.
   protected _nPoint = 4;
+  protected _constructPoint = 2;
 
   // CLASS METHODS
 
@@ -22,7 +23,7 @@ class Square extends WebGLObjects {
    */
   setVertex(idx: number, point: IPoint): void {
     // Get the anchor vertex.
-    const anchorVertex = this.position[(idx + 2) % 4];
+    const anchorVertex = this._position[(idx + 2) % 4];
     
     // Distance between the anchor and the corner.
     let dx = point.x - anchorVertex.x;
@@ -42,15 +43,15 @@ class Square extends WebGLObjects {
     }
 
     // Calculate new position for each vertex.
-    this.position[idx] = Point.fromIPoint(newCorner);
+    this._position[idx] = Point.fromIPoint(newCorner);
     if (idx % 2 === 0) {
       // The even vertex is the top left or bottom right.
-      this.position[mod(idx - 1,4)].y = newCorner.y;
-      this.position[mod(idx + 1,4)].x = newCorner.x;
+      this._position[mod(idx - 1,4)].y = newCorner.y;
+      this._position[mod(idx + 1,4)].x = newCorner.x;
     } else {
       // The odd vertex is the top right or bottom left.
-      this.position[mod(idx - 1,4)].x = newCorner.x;
-      this.position[mod(idx + 1,4)].y = newCorner.y;
+      this._position[mod(idx - 1,4)].x = newCorner.x;
+      this._position[mod(idx + 1,4)].y = newCorner.y;
     }
   }
 
@@ -62,9 +63,9 @@ class Square extends WebGLObjects {
    *
    * @param position 
    */
-  setPosition(...position: IPoint[]): void {
+  constructPosition(...position: IPoint[]): void {
     // Check if the number of vertices is equal to the number of position in parameter.
-    if (position.length !== 2) {
+    if (position.length !== this._constructPoint) {
       throw new Error(`The number of position in parameter must be equal to 2.`);
     }
 
@@ -88,7 +89,7 @@ class Square extends WebGLObjects {
     ];
 
     // Set the position.
-    this.position = allPosition.map(p => Point.fromIPoint(p));   
+    this._position = allPosition.map(p => Point.fromIPoint(p));   
   }
 
   /**
