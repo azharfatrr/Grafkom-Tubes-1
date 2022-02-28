@@ -53,12 +53,64 @@
       </div>
 
       <canvas width="700px" height="700px" id="canvas-content"></canvas>
-
-      <div type="button" class="menu-help">
-        <a href="/help"><h2>HELP</h2></a>
-      </div>
       
-    </div>
+      <div class="help">
+        <button data-modal-target="#modal"> ? </button>
+        <div class="modal" id="modal">
+            <div class="popup-header">
+                <div class="title">Need some helps?</div>
+                <button data-close-button class="close-button">&times;</button>
+            </div>
+            <div class="popup-body">
+              <h1 class="page-title">Welcome to 2D-CAD Help Menu!</h1>
+                  <p id="e3c7e677-91fe-454f-b42a-658dc6f15e18" class="">2D-CAD is a web app that can help you make polygon models. Things that you can do in 2D-CAD:</p>
+                  <h3 id="91ee7742-ef34-475c-90e4-11a63b471859" class="">1. Draw lines, squares, rectangles, and polygons.</h3><ol type="a" id="24c8efbe-a674-4fd8-b164-104380b007aa" class="numbered-list" start="1"><li>Select ‘draw’ in ‘select mode’.</li></ol><figure id="caf86a4a-aac1-454b-a30e-c31ad9a13e20" class="image"><a href="Welcome%20to%20caf86/Untitled.png"><img style="width:264px" src="Welcome%20to%20caf86/Untitled.png"/></a></figure><p id="0aa32d6f-fc2f-453e-92cf-b212ba58e131" class="">b. Under ‘select mode’, you will find ‘select shape’. Choose any shape you want, but here, we will draw a square.</p><figure id="8507f987-51d5-44f8-9e5b-0f4fd16ff8dd" class="image"><a href="Welcome%20to%20caf86/Untitled%201.png"><img style="width:175px" src="Welcome%20to%20caf86/Untitled%201.png"/></a></figure><p id="92f1de5e-ba6b-41b2-bdd6-16e5c5bb0be4" class="">c. Then, select a color or you can just put in an RGB color code.</p><figure id="cad08e70-776a-4671-bfea-f44152d6b24b" class="image"><a href="Welcome%20to%20caf86/Untitled%202.png"><img style="width:171px" src="Welcome%20to%20caf86/Untitled%202.png"/></a></figure><p id="48287a64-5c63-46bc-bc02-cf8cd9e97e80" class="">d. Now we can start drawing.</p><figure id="5b0d3d58-da16-4ae0-9d7c-902bd3da561f" class="image"><a href="Welcome%20to%20caf86/Untitled%203.png"><img style="width:1235px" src="Welcome%20to%20caf86/Untitled%203.png"/></a></figure><p id="70d7093d-3540-45c6-9942-5cf35e825e60" class="">e. Sometimes we just want to clear the canvas right? To do that, press ‘clear’ on the right of the ‘load’ button. </p><figure id="c2f39ae7-5386-4893-a54d-5549c0fbb5bb" class="image"><a href="Welcome%20to%20caf86/Untitled%204.png"><img style="width:199px" src="Welcome%20to%20caf86/Untitled%204.png"/></a></figure><p id="151710ca-3581-46ae-b203-95618f822043" class="">f. Need to leave? Don’t worry, you can always save it, and load it anytime you want! Just press the ‘save’ to save and the ‘load button to load. Your drawings are saved in JSON files.</p><p id="7cdf7f7c-d4ec-4efb-811c-9352b0fcc676" class="">
+            </p><h3 id="b4deed9d-6ed5-4a4b-b49e-32f4b5da7333" class="">2. Move your drawings</h3><p id="75a42602-f6d5-49bc-b26a-08427a0af26f" class="">In ‘select mode’, select the ‘Move’ mode. After that, click on any pivot points that you want to move.</p><figure id="09e51ef8-9a45-4a36-9dea-da9e2bc08a7b" class="image"><a href="Welcome%20to%20caf86/Untitled%205.png"><img style="width:138px" src="Welcome%20to%20caf86/Untitled%205.png"/></a></figure><p id="c28da99d-6d5a-4cdc-945a-9d71b2b26f29" class="">
+            </p><h3 id="778bdfde-7799-4410-8949-01e17ac50951" class="">3. Color your model.</h3><p id="355e3b46-6428-47d0-adda-4e75dcfdecda" class="">You can always change the colors of your drawings. For example, the drawing below is drawn in blue.</p><figure id="ea0ff8f2-5f6f-4e46-a2bd-bf61b4d973cd" class="image"><a href="Welcome%20to%20caf86/Untitled%206.png"><img style="width:1252px" src="Welcome%20to%20caf86/Untitled%206.png"/></a></figure><ol type="a" id="2c2c6f66-d50c-4859-b59b-f2af2729e257" class="numbered-list" start="1"><li>Let’s change it to red and yellow. first, in ‘select mode’, select ‘paint’.</li></ol><figure id="47708f94-9329-4680-915f-ab248711393e" class="image"><a href="Welcome%20to%20caf86/Untitled%207.png"><img style="width:129px" src="Welcome%20to%20caf86/Untitled%207.png"/></a></figure><p id="91109d50-e301-43c6-8d87-00a551ca0a91" class="">b. Select the appropriate color in ‘select color’. Here we will pick red.</p><figure id="d65d2f47-4030-430e-97f8-ad8a961d84b0" class="image"><a href="Welcome%20to%20caf86/Untitled%208.png"><img style="width:148px" src="Welcome%20to%20caf86/Untitled%208.png"/></a></figure><p id="7fd3a0f5-412e-4605-9091-9852cec6e558" class="">c. Now click on the area in the drawing that you want to make red. </p><figure id="67c15252-1014-47b7-a798-11d349b4f345" class="image"><a href="Welcome%20to%20caf86/Untitled%209.png"><img style="width:459px" src="Welcome%20to%20caf86/Untitled%209.png"/></a></figure><p id="03fba20c-fb57-4d52-8ce9-5365170c70f3" class="">d. By repeating the same things for yellow, here is our red and yellow drawing.</p><figure id="93d51afe-633f-480b-afcd-ca5070ff0dce" class="image"><a href="Welcome%20to%20caf86/Untitled%2010.png"><img style="width:1218px" src="Welcome%20to%20caf86/Untitled%2010.png"/></a></figure><p id="38b480d4-48bb-4d95-aedb-fd86d351e05e" class="">
+            </p>
+            </div>
+        </div>
+        <div id="overlay"></div>
+    </div> 
+
+    <script>
+      const openModalButtons = document.querySelectorAll('[data-modal-target]')
+      const closeModalButtons = document.querySelectorAll('[data-close-button]')
+      const overlay = document.getElementById('overlay')
+  
+      openModalButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              const modal = document.querySelector(button.dataset.modalTarget)
+              openModal(modal)
+          })
+      })
+  
+      overlay.addEventListener('click', () => {
+          const modals = document.querySelectorAll('.modal.active')
+          modals.forEach(modal => {
+              closeModal(modal)
+          })
+      })
+  
+      closeModalButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              const modal = button.closest('.modal')
+              closeModal(modal)
+          })
+      })
+  
+      function openModal(modal) {
+          if (modal == null) return
+          modal.classList.add('active')
+          overlay.classList.add('active')
+      }
+  
+      function closeModal(modal) {
+          if (modal == null) return
+          modal.classList.remove('active')
+          overlay.classList.remove('active')
+      }
+  </script>
 
     <script src="main.js" type="module"></script>
   </body>
